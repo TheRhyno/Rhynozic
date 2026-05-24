@@ -764,9 +764,62 @@ margin-bottom: 0.3rem;
       }
     }
   </style>
+
+  <!-- ===== STATS CSS ===== -->
+  <style>
+  header { display:flex; align-items:center; justify-content:center; position:relative; }
+  #statsBtn { position:absolute; right:14px; background:rgba(255,255,255,0.15); border:none; color:#fff; font-size:1.3rem; width:38px; height:38px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s; }
+  #statsBtn:hover { background:rgba(255,255,255,0.3); }
+  #statsScreen { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:#0a0a0a; z-index:5000; flex-direction:column; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; touch-action:pan-y; padding-bottom:40px; }
+  #statsScreen.visible { display:flex; }
+  .stats-header { background:linear-gradient(135deg,#FF0000 0%,#8B0000 100%); padding:20px 16px 30px; position:relative; text-align:center; flex-shrink:0; }
+  .stats-header-close { position:absolute; left:12px; top:12px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer; padding:6px; }
+  .stats-header h1 { margin:8px 0 4px; font-size:1.6rem; font-weight:900; letter-spacing:1px; }
+  .stats-header p { margin:0; font-size:0.85rem; opacity:0.8; }
+  .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:16px; }
+  .stats-card { background:#1a1a1a; border-radius:16px; padding:18px 14px; display:flex; flex-direction:column; gap:4px; animation:fadeUp 0.5s ease both; }
+  .stats-card.full { grid-column:1/-1; }
+  .stats-card-icon { font-size:1.8rem; }
+  .stats-card-value { font-size:1.6rem; font-weight:900; color:#fff; line-height:1; margin-top:4px; }
+  .stats-card-label { font-size:0.75rem; color:#888; text-transform:uppercase; letter-spacing:0.5px; }
+  .stats-card.red { background:linear-gradient(135deg,#FF0000 0%,#8B0000 100%); }
+  .stats-card.green { background:linear-gradient(135deg,#1db954 0%,#0d7a35 100%); }
+  .stats-card.blue { background:linear-gradient(135deg,#1e90ff 0%,#0a4a8a 100%); }
+  .stats-card.orange { background:linear-gradient(135deg,#ff6b00 0%,#a83d00 100%); }
+  .stats-card.purple { background:linear-gradient(135deg,#9b59b6 0%,#5a1a8a 100%); }
+  .stats-section-title { font-size:0.9rem; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:1px; padding:8px 16px 0; }
+  .stats-top-list { padding:0 16px; display:flex; flex-direction:column; gap:8px; }
+  .stats-top-item { display:flex; align-items:center; gap:12px; background:#1a1a1a; border-radius:12px; padding:10px 12px; animation:fadeUp 0.5s ease both; }
+  .stats-top-rank { font-size:1.1rem; font-weight:900; color:#FF0000; width:24px; text-align:center; flex-shrink:0; }
+  .stats-top-img { width:44px; height:44px; border-radius:8px; object-fit:cover; flex-shrink:0; }
+  .stats-top-info { flex:1; overflow:hidden; }
+  .stats-top-title { font-size:0.9rem; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .stats-top-sub { font-size:0.75rem; color:#888; margin-top:2px; }
+  .stats-top-bar-wrap { width:60px; height:4px; background:#333; border-radius:2px; overflow:hidden; flex-shrink:0; }
+  .stats-top-bar { height:100%; background:#FF0000; border-radius:2px; transition:width 1s ease; }
+  .stats-artist-row { display:flex; align-items:center; gap:10px; padding:8px 16px; animation:fadeUp 0.5s ease both; }
+  .stats-artist-name { font-size:0.9rem; font-weight:bold; flex-shrink:0; width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .stats-artist-bar-wrap { flex:1; height:6px; background:#333; border-radius:3px; overflow:hidden; }
+  .stats-artist-bar { height:100%; background:linear-gradient(90deg,#FF0000,#ff6b00); border-radius:3px; transition:width 1.2s ease; }
+  .stats-artist-count { font-size:0.8rem; color:#888; flex-shrink:0; width:40px; text-align:right; }
+  .stats-heatmap { padding:0 16px; display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .stats-heatmap-cell { aspect-ratio:1; border-radius:4px; background:#222; }
+  .stats-heatmap-cell.h1 { background:#4a0000; }
+  .stats-heatmap-cell.h2 { background:#8B0000; }
+  .stats-heatmap-cell.h3 { background:#CC0000; }
+  .stats-heatmap-cell.h4 { background:#FF0000; }
+  .stats-hours-bars { padding:0 16px; display:flex; gap:3px; align-items:flex-end; height:80px; }
+  .stats-hour-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end; gap:2px; }
+  .stats-hour-bar { width:100%; background:#FF0000; border-radius:3px 3px 0 0; min-height:2px; transition:height 1s ease; opacity:0.8; }
+  .stats-hour-label { font-size:0.55rem; color:#555; }
+  .stats-reset-btn { margin:20px 16px 0; background:#1a1a1a; border:1px solid #333; color:#888; padding:12px; border-radius:12px; font-size:0.85rem; cursor:pointer; width:calc(100% - 32px); text-align:center; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+  </style>
+
 </head>
 <body>
-  <header>Rhynozic</header>
+  <header>Rhynozic <button id="statsBtn" onclick="openStats()" title="Mes stats">📊</button></header>
   <div class="container">
 
     <div class="playlists-sidebar" id="playlistsSidebar">
@@ -827,6 +880,38 @@ margin-bottom: 0.3rem;
     </div>
   </div>
   <audio id="audio"></audio>
+
+<!-- ===== PAGE STATS PLEIN ÉCRAN ===== -->
+<div id="statsScreen">
+  <div class="stats-header">
+    <button class="stats-header-close" onclick="closeStats()">⌄</button>
+    <div style="font-size:2.5rem">📊</div>
+    <h1>Mes Stats</h1>
+    <p id="statsHeaderSub">Chargement...</p>
+  </div>
+
+  <!-- Cartes chiffres clés -->
+  <div class="stats-grid" id="statsCardsGrid"></div>
+
+  <!-- Top 10 sons -->
+  <div class="stats-section-title">🏆 Top sons</div>
+  <div class="stats-top-list" id="statsTopTracks"></div>
+
+  <!-- Top artistes -->
+  <div class="stats-section-title" style="margin-top:12px">🎤 Top artistes</div>
+  <div id="statsArtists"></div>
+
+  <!-- Heatmap activité 28 jours -->
+  <div class="stats-section-title" style="margin-top:12px">📅 Activité (28 derniers jours)</div>
+  <div class="stats-heatmap" id="statsHeatmap"></div>
+
+  <!-- Répartition horaire -->
+  <div class="stats-section-title" style="margin-top:16px">🕐 À quelle heure tu écoutes</div>
+  <div class="stats-hours-bars" id="statsHours"></div>
+
+  <!-- Bouton reset -->
+  <button class="stats-reset-btn" onclick="resetStats()">🗑️ Réinitialiser mes stats</button>
+</div>
 
 
 <div class="mini-player" id="miniPlayer">
@@ -2480,6 +2565,9 @@ function playTrack(index) {
   thumbnail.src = track.img;
   audio.play();
 
+  // ===== TRACKING STATS =====
+  statsTrackPlay(track);
+
 updateMediaSession(track);
 
   playPauseBtn.textContent = "⏸️";
@@ -3305,6 +3393,258 @@ _origNowPlayingObserver.observe(document.getElementById('now-playing'), { childL
     }
   }, 25000);
 })();
+
+// ================================================================
+// SYSTÈME DE STATS — RHYNOZIC
+// ================================================================
+const STATS_KEY = 'rhynozic_stats_v1';
+
+function loadStats() {
+  try {
+    const raw = localStorage.getItem(STATS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return {
+    plays: {},          // { trackUrl: { title, artist, img, count, seconds } }
+    dailyMinutes: {},   // { 'YYYY-MM-DD': minutes }
+    hourBuckets: new Array(24).fill(0), // écoutes par heure
+    firstListenDate: null,
+    totalSeconds: 0,
+    streak: 0,
+    lastStreakDate: null
+  };
+}
+
+function saveStats(s) {
+  // hourBuckets est un Array, JSON.stringify le gère
+  localStorage.setItem(STATS_KEY, JSON.stringify(s));
+}
+
+// Appelé à chaque playTrack
+function statsTrackPlay(track) {
+  const s = loadStats();
+  const key = track.url || track.title;
+
+  // Extraire artiste
+  let artist = 'Inconnu';
+  let title = track.title;
+  const di = track.title.lastIndexOf(' - ');
+  if (di !== -1) { title = track.title.substring(0, di).trim(); artist = track.title.substring(di+3).trim(); }
+
+  if (!s.plays[key]) s.plays[key] = { title, artist, img: track.img, count: 0, seconds: 0 };
+  s.plays[key].count++;
+  s.plays[key].img = track.img;
+
+  if (!s.firstListenDate) s.firstListenDate = new Date().toISOString();
+
+  // Heure courante
+  const hour = new Date().getHours();
+  if (!s.hourBuckets) s.hourBuckets = new Array(24).fill(0);
+  s.hourBuckets[hour] = (s.hourBuckets[hour] || 0) + 1;
+
+  // Streak
+  const today = new Date().toISOString().slice(0, 10);
+  if (s.lastStreakDate !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    if (s.lastStreakDate === yesterday) {
+      s.streak = (s.streak || 0) + 1;
+    } else if (s.lastStreakDate !== today) {
+      s.streak = 1;
+    }
+    s.lastStreakDate = today;
+  }
+
+  // Journalier init
+  if (!s.dailyMinutes[today]) s.dailyMinutes[today] = 0;
+
+  saveStats(s);
+
+  // Tracker les secondes en live
+  if (window._statsInterval) clearInterval(window._statsInterval);
+  window._statsTrackKey = key;
+  window._statsInterval = setInterval(() => {
+    if (!audio.paused) {
+      const st = loadStats();
+      if (st.plays[window._statsTrackKey]) {
+        st.plays[window._statsTrackKey].seconds = (st.plays[window._statsTrackKey].seconds || 0) + 1;
+        st.totalSeconds = (st.totalSeconds || 0) + 1;
+        const d = new Date().toISOString().slice(0, 10);
+        if (!st.dailyMinutes[d]) st.dailyMinutes[d] = 0;
+        st.dailyMinutes[d] = parseFloat((st.dailyMinutes[d] + 1/60).toFixed(4));
+        saveStats(st);
+      }
+    }
+  }, 1000);
+}
+
+function openStats() {
+  renderStats();
+  document.getElementById('statsScreen').classList.add('visible');
+}
+function closeStats() {
+  document.getElementById('statsScreen').classList.remove('visible');
+}
+function resetStats() {
+  if (confirm('Réinitialiser toutes tes stats ?')) {
+    localStorage.removeItem(STATS_KEY);
+    renderStats();
+  }
+}
+
+function renderStats() {
+  const s = loadStats();
+  const plays = s.plays || {};
+  const totalSec = s.totalSeconds || 0;
+  const totalMin = Math.floor(totalSec / 60);
+  const totalHours = (totalSec / 3600).toFixed(1);
+
+  // Tri par écoutes
+  const sorted = Object.values(plays).sort((a, b) => b.count - a.count);
+  const totalPlays = sorted.reduce((a, b) => a + b.count, 0);
+  const uniqueTracks = sorted.length;
+
+  // Header sub
+  const since = s.firstListenDate
+    ? new Date(s.firstListenDate).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' })
+    : 'maintenant';
+  document.getElementById('statsHeaderSub').textContent = `Depuis le ${since}`;
+
+  // ── Cartes chiffres clés ──
+  const streak = s.streak || 0;
+  const grid = document.getElementById('statsCardsGrid');
+  grid.innerHTML = `
+    <div class="stats-card red">
+      <div class="stats-card-icon">🔥</div>
+      <div class="stats-card-value">${streak}</div>
+      <div class="stats-card-label">Jours de suite</div>
+    </div>
+    <div class="stats-card green">
+      <div class="stats-card-icon">⏱️</div>
+      <div class="stats-card-value">${totalHours}h</div>
+      <div class="stats-card-label">Temps d'écoute</div>
+    </div>
+    <div class="stats-card blue">
+      <div class="stats-card-icon">▶️</div>
+      <div class="stats-card-value">${totalPlays}</div>
+      <div class="stats-card-label">Lectures totales</div>
+    </div>
+    <div class="stats-card orange">
+      <div class="stats-card-icon">🎵</div>
+      <div class="stats-card-value">${uniqueTracks}</div>
+      <div class="stats-card-label">Sons écoutés</div>
+    </div>
+    <div class="stats-card purple full">
+      <div class="stats-card-icon">📆</div>
+      <div class="stats-card-value">${Object.keys(s.dailyMinutes||{}).length > 0 ? Math.round(totalMin / Object.keys(s.dailyMinutes).length) : 0} min</div>
+      <div class="stats-card-label">Moyenne par jour d'écoute</div>
+    </div>
+  `;
+
+  // ── Top 10 sons ──
+  const topEl = document.getElementById('statsTopTracks');
+  topEl.innerHTML = '';
+  const top10 = sorted.slice(0, 10);
+  const maxCount = top10[0] ? top10[0].count : 1;
+  top10.forEach((t, i) => {
+    const delay = i * 0.07;
+    const pct = Math.round((t.count / maxCount) * 100);
+    const mins = Math.floor((t.seconds || 0) / 60);
+    topEl.innerHTML += `
+      <div class="stats-top-item" style="animation-delay:${delay}s">
+        <div class="stats-top-rank">${i+1}</div>
+        <img class="stats-top-img" src="${t.img}" onerror="this.src=''" />
+        <div class="stats-top-info">
+          <div class="stats-top-title">${t.title}</div>
+          <div class="stats-top-sub">${t.artist} · ${t.count} écoute${t.count>1?'s':''} · ${mins} min</div>
+        </div>
+        <div class="stats-top-bar-wrap"><div class="stats-top-bar" style="width:0%" data-pct="${pct}"></div></div>
+      </div>`;
+  });
+  if (!top10.length) topEl.innerHTML = '<div style="padding:16px;color:#555;text-align:center">Aucune écoute pour l\'instant</div>';
+
+  // ── Top artistes ──
+  const artistMap = {};
+  sorted.forEach(t => {
+    if (!artistMap[t.artist]) artistMap[t.artist] = { count: 0, seconds: 0 };
+    artistMap[t.artist].count += t.count;
+    artistMap[t.artist].seconds += (t.seconds || 0);
+  });
+  const artists = Object.entries(artistMap).sort((a,b)=>b[1].count-a[1].count).slice(0, 6);
+  const maxA = artists[0] ? artists[0][1].count : 1;
+
+  // Artiste de l'année = celui avec le plus de secondes d'écoute
+  const topArtistByTime = Object.entries(artistMap).sort((a,b)=>b[1].seconds-a[1].seconds)[0];
+  const topArtistName = topArtistByTime ? topArtistByTime[0] : '—';
+  const topArtistMins = topArtistByTime ? Math.floor(topArtistByTime[1].seconds / 60) : 0;
+  // Trouver une image de l'artiste de l'année
+  const topArtistImg = topArtistByTime
+    ? (sorted.find(t => t.artist === topArtistByTime[0]) || {}).img || ''
+    : '';
+
+  const artEl = document.getElementById('statsArtists');
+  artEl.innerHTML = '';
+
+  // Carte artiste de l'année (pleine largeur, avant les barres)
+  artEl.innerHTML += `
+    <div style="margin:8px 16px 4px; background:linear-gradient(135deg,#FF0000 0%,#8B0000 100%); border-radius:16px; padding:16px; display:flex; align-items:center; gap:14px; animation:fadeUp 0.5s ease both;">
+      ${topArtistImg ? `<img src="${topArtistImg}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,0.3)" />` : '<div style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem">🎤</div>'}
+      <div>
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:1px;font-weight:bold">⭐ Artiste de l'année</div>
+        <div style="font-size:1.2rem;font-weight:900;color:#fff;margin-top:2px">${topArtistName}</div>
+        <div style="font-size:0.8rem;color:rgba(255,255,255,0.75);margin-top:2px">${topArtistMins} min écoutées</div>
+      </div>
+    </div>`;
+
+  artists.forEach(([name, data], i) => {
+    const pct = Math.round((data.count / maxA) * 100);
+    const mins = Math.floor(data.seconds / 60);
+    artEl.innerHTML += `
+      <div class="stats-artist-row" style="animation-delay:${i*0.07}s">
+        <div class="stats-artist-name">${name}</div>
+        <div class="stats-artist-bar-wrap"><div class="stats-artist-bar" style="width:0%" data-pct="${pct}"></div></div>
+        <div class="stats-artist-count" style="width:70px;text-align:right">${data.count} · ${mins}min</div>
+      </div>`;
+  });
+  if (!artists.length) artEl.innerHTML += '<div style="padding:16px;color:#555;text-align:center">Aucune donnée</div>';
+
+  // ── Heatmap 28 jours ──
+  const hm = document.getElementById('statsHeatmap');
+  hm.innerHTML = '';
+  const daily = s.dailyMinutes || {};
+  const maxDay = Math.max(...Object.values(daily), 1);
+  for (let i = 27; i >= 0; i--) {
+    const d = new Date(Date.now() - i * 86400000).toISOString().slice(0,10);
+    const mins = daily[d] || 0;
+    let cls = '';
+    if (mins > 0) cls = mins < maxDay*0.25 ? 'h1' : mins < maxDay*0.5 ? 'h2' : mins < maxDay*0.75 ? 'h3' : 'h4';
+    hm.innerHTML += `<div class="stats-heatmap-cell ${cls}" title="${d}: ${Math.round(mins)} min"></div>`;
+  }
+
+  // ── Répartition horaire ──
+  const hb = s.hourBuckets || new Array(24).fill(0);
+  const maxH = Math.max(...hb, 1);
+  const hoursEl = document.getElementById('statsHours');
+  hoursEl.innerHTML = '';
+  hb.forEach((v, h) => {
+    const pct = Math.round((v / maxH) * 100);
+    const label = h % 6 === 0 ? `${h}h` : '';
+    hoursEl.innerHTML += `
+      <div class="stats-hour-bar-wrap">
+        <div class="stats-hour-bar" style="height:${pct}%" title="${h}h: ${v}"></div>
+        <div class="stats-hour-label">${label}</div>
+      </div>`;
+  });
+
+  // Animer les barres après rendu
+  setTimeout(() => {
+    document.querySelectorAll('.stats-top-bar[data-pct]').forEach(el => {
+      el.style.width = el.dataset.pct + '%';
+    });
+    document.querySelectorAll('.stats-artist-bar[data-pct]').forEach(el => {
+      el.style.width = el.dataset.pct + '%';
+    });
+  }, 100);
+}
 
   </script>
 </body>
