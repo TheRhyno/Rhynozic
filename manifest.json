@@ -1,0 +1,64 @@
+{
+  "name": "Rhynozic",
+  "short_name": "Rhynozic",
+  "description": "Rhynozic – Lecteur musical",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#181818",
+  "theme_color": "#FF0000",
+  "lang": "fr",
+  "categories": ["music", "entertainment"],
+
+  "icons": [
+    {
+      "src": "https://i.pinimg.com/736x/47/4c/57/474c57724fce98d50251cc5c2c463849.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://i.pinimg.com/736x/47/4c/57/474c57724fce98d50251cc5c2c463849.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "Lecture en cours",
+      "short_name": "Lecture",
+      "description": "Reprendre la lecture",
+      "url": "./index.html",
+      "icons": [
+        {
+          "src": "https://i.pinimg.com/736x/47/4c/57/474c57724fce98d50251cc5c2c463849.jpg",
+          "sizes": "96x96",
+          "type": "image/jpeg"
+        }
+      ]
+    }
+  ],
+
+  "screenshots": [
+    {
+      "src": "https://i.pinimg.com/736x/47/4c/57/474c57724fce98d50251cc5c2c463849.jpg",
+      "sizes": "390x844",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Rhynozic – Lecteur musical"
+    }
+  ],
+
+  "prefer_related_applications": false,
+
+  "related_applications": [],
+
+  "handle_links": "preferred",
+
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}
