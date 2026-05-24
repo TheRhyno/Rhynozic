@@ -6,9 +6,9 @@
 //  • Notification système via MediaSession (déclenchée côté page)
 // ============================================================
 
-const CACHE_NAME   = 'rhynozic-v1';
-const AUDIO_CACHE  = 'rhynozic-audio-v1';
-const IMG_CACHE    = 'rhynozic-img-v1';
+const CACHE_NAME   = 'rhynozic-v2';
+const AUDIO_CACHE  = 'rhynozic-audio-v2';
+const IMG_CACHE    = 'rhynozic-img-v2';
 
 // Fichiers shell à mettre en cache dès l'installation
 const SHELL_FILES = [
