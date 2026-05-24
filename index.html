@@ -14,9 +14,38 @@
   <meta name="apple-mobile-web-app-title" content="Rhynozic" />
   <meta name="application-name" content="Rhynozic" />
   <meta name="description" content="Rhynozic – Lecteur musical" />
-
-  <!-- Icons Apple (fallback si pas dans manifest) -->
   <link rel="apple-touch-icon" href="Logo_Rhynozic.png" />
+
+  <!-- Toast mise à jour PWA -->
+  <style>
+  #pwa-update-toast {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-80px);
+    background: #1db954;
+    color: #000;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    z-index: 99999;
+    white-space: nowrap;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+    opacity: 0;
+    cursor: pointer;
+    gap: 8px;
+    align-items: center;
+  }
+  #pwa-update-toast.show {
+    display: flex;
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  </style>
 
   <style>
 
@@ -2420,12 +2449,12 @@ updateMediaSession(track);
       artist: artistName,
       album: 'Rhynozic',
       artwork: [
-        { src: 'Logo_Rhynozic.png',  sizes: '96x96',   type: 'image/png' },
-        { src: 'Logo_Rhynozic.png',  sizes: '128x128',  type: 'image/png' },
-        { src: track.img,             sizes: '192x192',  type: 'image/jpeg' },
-        { src: track.img,             sizes: '256x256',  type: 'image/jpeg' },
-        { src: track.img,             sizes: '384x384',  type: 'image/jpeg' },
-        { src: track.img,             sizes: '512x512',  type: 'image/jpeg' },
+        { src: track.img, sizes: '96x96',   type: 'image/jpeg' },
+        { src: track.img, sizes: '128x128',  type: 'image/jpeg' },
+        { src: track.img, sizes: '192x192',  type: 'image/jpeg' },
+        { src: track.img, sizes: '256x256',  type: 'image/jpeg' },
+        { src: track.img, sizes: '384x384',  type: 'image/jpeg' },
+        { src: track.img, sizes: '512x512',  type: 'image/jpeg' },
       ]
     });
 
@@ -3073,18 +3102,76 @@ const _origNowPlayingObserver = new MutationObserver(() => {
 _origNowPlayingObserver.observe(document.getElementById('now-playing'), { childList: true, characterData: true, subtree: true });
 
 // ================================================================
-// ENREGISTREMENT DU SERVICE WORKER PWA
+// SERVICE WORKER PWA + DÉTECTION DE MISE À JOUR AUTOMATIQUE
 // ================================================================
-if ('serviceWorker' in navigator) {
+(function initPWA() {
+  if (!('serviceWorker' in navigator)) return;
+
+  let newWorker = null;
+
+  // Créer le toast une seule fois dans le DOM
+  let toast = document.getElementById('pwa-update-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'pwa-update-toast';
+    toast.innerHTML = '🔄 Nouvelle version disponible !';
+    document.body.appendChild(toast);
+  }
+
+  function showUpdateToast() {
+    // Petite pause pour que l'animation soit visible après le display:flex
+    setTimeout(() => toast.classList.add('show'), 50);
+    // Au tap : activer le nouveau SW et recharger
+    toast.onclick = () => {
+      toast.innerHTML = '⏳ Mise à jour en cours…';
+      if (newWorker) {
+        newWorker.postMessage({ type: 'SKIP_WAITING' });
+      } else {
+        window.location.reload();
+      }
+    };
+  }
+
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js', { scope: './' })
       .then(reg => {
         console.log('[SW] Enregistré ✓ scope:', reg.scope);
+
+        // ── Vérifier si un SW en attente existe déjà (ex: premier chargement après update) ──
+        if (reg.waiting) {
+          newWorker = reg.waiting;
+          showUpdateToast();
+        }
+
+        // ── Nouveau SW en cours d'installation ──
+        reg.addEventListener('updatefound', () => {
+          const installing = reg.installing;
+          if (!installing) return;
+          installing.addEventListener('statechange', () => {
+            if (installing.state === 'installed' && navigator.serviceWorker.controller) {
+              // Nouveau SW installé ET un ancien SW contrôle déjà la page → mise à jour dispo
+              newWorker = installing;
+              showUpdateToast();
+            }
+          });
+        });
+
+        // ── Forcer la vérification de mise à jour à chaque démarrage ──
         reg.update();
+        // Re-vérifier toutes les 60 secondes si l'app reste ouverte
+        setInterval(() => reg.update(), 60 * 1000);
       })
       .catch(err => console.warn('[SW] Erreur:', err));
+
+    // ── Quand le SW change (après skipWaiting) → recharger la page ──
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
   });
-}
+})();
 
 // ================================================================
 // AUDIO BACKGROUND : empêcher l'OS de couper la lecture
@@ -3093,13 +3180,11 @@ if ('serviceWorker' in navigator) {
   const audioEl = document.getElementById('audio');
   if (!audioEl) return;
 
-  // 1) Attributs HTML5 pour lecture en arrière-plan
   audioEl.setAttribute('playsinline', '');
   audioEl.setAttribute('webkit-playsinline', '');
   audioEl.setAttribute('x-webkit-airplay', 'allow');
   audioEl.preload = 'auto';
 
-  // 2) Wake Lock API — empêche l'écran/CPU de dormir pendant la lecture
   let wakeLock = null;
   async function requestWakeLock() {
     if (!('wakeLock' in navigator)) return;
@@ -3123,14 +3208,12 @@ if ('serviceWorker' in navigator) {
   });
   audioEl.addEventListener('ended', releaseWakeLock);
 
-  // 3) Relancer la lecture si l'audio est interrompu par l'OS
   audioEl.addEventListener('abort', () => {
     if (!audioEl.paused && audioEl.src) {
       setTimeout(() => audioEl.play().catch(() => {}), 500);
     }
   });
 
-  // 4) Visibilitychange : quand l'app revient au premier plan
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
       if (audioEl.src && !audioEl.paused && audioEl.readyState < 3) {
@@ -3140,7 +3223,6 @@ if ('serviceWorker' in navigator) {
     }
   });
 
-  // 5) Heartbeat toutes les 25s
   setInterval(() => {
     if (!audioEl.paused && audioEl.src && audioEl.readyState === 0) {
       const t = audioEl.currentTime;
