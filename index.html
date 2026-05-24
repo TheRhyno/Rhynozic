@@ -2783,7 +2783,17 @@ function handleGesture() {
 // Initialisation interface
 displayPlaylistsSidebar();
 displayPlaylist();
-playTrack(currentTrack);
+// Init silencieuse : affiche la première piste sans la jouer
+(function initFirstTrack() {
+  const track = filteredPlaylist[currentTrack];
+  if (!track) return;
+  document.getElementById('now-playing').innerText = `🎵 ${track.title}`;
+  document.getElementById('thumbnail').src = track.img;
+  const audioEl = document.getElementById('audio');
+  audioEl.src = track.url || track.src || '';
+  audioEl.preload = 'none';
+  updatePlaylistHighlight();
+})();
 
 
 
