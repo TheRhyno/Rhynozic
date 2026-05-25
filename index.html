@@ -379,7 +379,28 @@ html, body {
   transition: color 0.2s;
 }
 .full-player-controls button.active { color: #1db954; }
-.full-player-controls #fullPlayPauseBtn { font-size: 2.4rem; }
+
+/* ===== BOUTON PLAY/PAUSE CIRCULAIRE ===== */
+.full-player-controls #fullPlayPauseBtn {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: 50% !important;
+  background: #fff !important;
+  color: #000 !important;
+  font-size: 1.6rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  box-shadow: 0 4px 20px rgba(255,255,255,0.2);
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+  flex-shrink: 0;
+}
+.full-player-controls #fullPlayPauseBtn:active {
+  transform: scale(0.90);
+  box-shadow: 0 2px 10px rgba(255,255,255,0.1);
+}
 .full-progress-bar {
   width: 85%;
   height: 5px;
@@ -987,7 +1008,7 @@ margin-bottom: 0.3rem;
     <button class="stats-pay-close" onclick="closePayDetail()">←</button>
     <div class="stats-pay-header-info">
       <div class="stats-pay-header-title">💸 Revenus estimés des artistes</div>
-      <div class="stats-pay-header-sub">Basé sur 0,004€ par stream (moyenne Spotify)</div>
+      <div class="stats-pay-header-sub">Basé sur 0,004€ par stream</div>
     </div>
   </div>
   <div class="stats-pay-list" id="statsPayList"></div>
@@ -1035,7 +1056,10 @@ margin-bottom: 0.3rem;
   <div class="full-player-controls">
     <button onclick="toggleShuffle()" id="fullShuffleBtn" title="Shuffle">🔀</button>
     <button onclick="prevTrack()">⏮️</button>
-    <button onclick="togglePlay()" id="fullPlayPauseBtn">▶️</button>
+    <button onclick="togglePlay()" id="fullPlayPauseBtn" aria-label="Play/Pause">
+      <svg id="fullPlayIcon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px"><polygon points="5,3 19,12 5,21"/></svg>
+      <svg id="fullPauseIcon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    </button>
     <button onclick="nextTrack()">⏭️</button>
     <button onclick="toggleRepeat()" id="fullRepeatBtn" title="Repeat">🔁</button>
   </div>
@@ -1779,18 +1803,7 @@ margin-bottom: 0.3rem;
   isSynced: false,
   lyricsUrlSynced: "SYNCRO",
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesFautquejemetiredelaNonsyncro.txt"
-        },
-        {
-          title: "Mimi - Jul",
-          url: "TEST",
-          img: "TESTTESTTEST",
-  duration: 219,
-  isSynced: false,
-  lyricsUrlSynced: "SYNCRO",
-  lyricsUrlText: "TEST"
         }
-
-
 
 
 
@@ -1799,7 +1812,7 @@ margin-bottom: 0.3rem;
       "Gims": [
         {
           title: "Ciel - Gims",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20CIEL%20-%20GIMS.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GIMS-CIEL.flac",
           img: "https://i1.sndcdn.com/artworks-YZmyjIWSACZnNCIy-bvdeIw-t500x500.jpg",
   duration: 186,
   isSynced: false,
@@ -1808,7 +1821,7 @@ margin-bottom: 0.3rem;
         },
         {
           title: "Ninao - Gims",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20NINAO%20-%20GIMS.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GIMS-NINAO.flac",
           img: "https://cdn-images.dzcdn.net/images/cover/2cd8dd5a5c11af547204abae0da5be24/500x500.jpg",
   duration: 167,
   isSynced: false,
@@ -1817,16 +1830,16 @@ margin-bottom: 0.3rem;
         },
         {
           title: "Air Force Blanche - Gims & Jul",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/GIMS%20%26%20Jul%20-%20AIR%20FORCE%20BLANCHE%20(Official%20Lyrics%20Vid%C3%A9o).mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GIMS-AIR_FORCE_BLANCHE.flac",
           img: "https://i1.sndcdn.com/artworks-GE6x3N1o5feDEKKv-OZexfg-t500x500.jpg",
-  duration: 185,
+  duration: 186,
   isSynced: false,
   lyricsUrlSynced: "SYNCRO",
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesAirforceblanche.txt"
         },
         {
           title: "PARISIENNE - GIMS",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20PARISIENNE%20-%20GIMS.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GIMS-PARISIENNE.flac",
           img: "https://i.scdn.co/image/ab67616d00001e0293db7b33b63de6dc99a131ee",
   duration: 158,
   isSynced: false,
@@ -1835,25 +1848,25 @@ margin-bottom: 0.3rem;
         },
         {
           title: "Un monde à l'autre - Gims Ft La Mano & SCH",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Un%20monde%20%C3%A0%20l'autre%20-%20GP%20Explorer.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GP_Explorer-Un_monde_a_l_autre.flac",
           img: "https://i.scdn.co/image/ab67616d0000b273387935d4b38e2ad48c64916d",
-  duration: 156,
+  duration: 155,
   isSynced: false,
   lyricsUrlSynced: "SYNCRO",
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/refs/heads/main/ParolesUnmonde%C3%A0l'autre.txt"
         },
         {
           title: "Sois pas timide - Gims",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20SOIS%20PAS%20TIMIDE%20-%20GIMS.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GIMS-SOIS_PAS_TIMIDE.flac",
           img: "https://i1.sndcdn.com/artworks-FYxnA44eAvDG-0-t500x500.jpg",
-  duration: 166,
+  duration: 165,
   isSynced: false,
   lyricsUrlSynced: "SYNCRO",
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesSoispastimide.txt"
         },
         {
           title: "Spider - Gims",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20SPIDER%20-%20GIMS.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GIMS-SPIDER.flac",
           img: "https://cdn-images.dzcdn.net/images/cover/a45f78b33507713b2ffc6d95afa87b6a/0x1900-000000-80-0-0.jpg",
   duration: 188,
   isSynced: false,
@@ -1871,7 +1884,7 @@ margin-bottom: 0.3rem;
         },
         {
           title: "Hola Señorita - Gims",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Hola%20Se%C3%B1orita%20-%20GIMS.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GIMS-Hola_Senorita.flac",
           img: "https://i.scdn.co/image/ab67616d0000b2735a830e6aa720f2f6f8695e8c",
   duration: 218,
   isSynced: false,
@@ -1880,7 +1893,7 @@ margin-bottom: 0.3rem;
         },
         {
           title: "Seya - Gims / Morad",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Seya%20-%20GIMS.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GIMS-Seya.flac",
           img: "https://i.scdn.co/image/ab67616d0000b2739f09253bd56dacf61e8c50b3",
   duration: 188,
   isSynced: false,
@@ -1889,7 +1902,7 @@ margin-bottom: 0.3rem;
         },
         {
           title: "Appelle ta copine - Gims",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20APPELLE%20TA%20COPINE%20-%20GIMS.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GIMS-APPELLE_TA_COPINE.flac",
           img: "https://i.scdn.co/image/ab67616d0000b273f585fac455f1176c4dee04a6",
   duration: 180,
   isSynced: false,
@@ -1897,17 +1910,8 @@ margin-bottom: 0.3rem;
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesAppelletacopine.txt"
         },
         {
-          title: "Contact - Gims",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20CONTACT%20-%20GIMS.mp3",
-          img: "https://images.genius.com/5871071340e014012b3c27020a64cbc5.300x300x1.jpg",
-  duration: 194,
-  isSynced: false,
-  lyricsUrlSynced: "SYNCRO",
-  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesContact.txt"
-        },
-        {
           title: "Best life - Naps Ft Gims",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Best%20life%20-%20Naps.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Naps-Best_life.flac",
           img: "https://images.epagine.fr/233/3700187675233.jpg",
   duration: 189,
   isSynced: false,
@@ -1916,13 +1920,31 @@ margin-bottom: 0.3rem;
         },
         {
           title: "Piano - Gims Ft Werenoi",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Piano%20-%20Werenoi.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Werenoi-Piano.flac",
           img: "https://i.scdn.co/image/ab67616d0000b2737c02e9af90fa282fa149cf99",
   duration: 173,
   isSynced: false,
   lyricsUrlSynced: "SYNCRO",
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesPiano.txt"
         },
+        {
+          title: "Tu me rends bête - Gims Ft Damso",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GIMS-TU_ME_RENDS_BETE.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b273f75f0d22f59b35aa43d0c849",
+  duration: 165,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesTumerendsbete.txt"
+        },
+        {
+          title: "Mimi - Gims",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        }
 
       ],
 
@@ -1930,21 +1952,21 @@ margin-bottom: 0.3rem;
       "Anyme & Houdi": [
         {
           title: "Toute la nuit - Anyme",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Toute%20la%20nuit%20-%20GP%20Explorer.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GP_Explorer-Toute_la_nuit.flac",
           img: "https://i.scdn.co/image/ab67616d0000b273387935d4b38e2ad48c64916d",
   duration: 198,
   isSynced: false,
   lyricsUrlSynced: "SYNC",
-  lyricsUrlText: "TEXT"
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesToutelanuit.txt"
         },
         {
-          title: "Shamballa - Anyme & Shaydee's",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Shamballa%20-%20Anyme023.mp3",
+          title: "Shamballa - Shaydee's Ft Anyme",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Shaydee_s-Shamballa.flac",
           img: "https://i.scdn.co/image/ab67616d00001e02209b694d0c7492b313e1603c",
   duration: 147,
   isSynced: false,
   lyricsUrlSynced: "SYNC",
-  lyricsUrlText: "TEXT"
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesShamballa.txt"
         },
         {
           title: "Exclu - Anyme Ft Houdi",
@@ -1956,8 +1978,8 @@ margin-bottom: 0.3rem;
   lyricsUrlText: "TEXT"
         },
         {
-          title: "SENSATION - HOUDI",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20SENSATION%20-%20HOUDI.mp3",
+          title: "Sensation - Houdi",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/HOUDI-SENSATION.flac",
           img: "https://i.scdn.co/image/ab67616d0000b273f6b0db66236a60f4cdaeb8dc",
   duration: 147,
   isSynced: false,
@@ -1965,8 +1987,8 @@ margin-bottom: 0.3rem;
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/refs/heads/main/ParolesSensationNonsyncro.txt"
         },
         {
-          title: "AILLEURS - HOUDI",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20AILLEURS%20-%20HOUDI.mp3",
+          title: "Ailleurs - Houdi",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/HOUDI-AILLEURS.flac",
           img: "https://i.scdn.co/image/ab67616d0000b27320d84617cc3781797b08c03d",
   duration: 144,
   isSynced: false,
@@ -1975,7 +1997,7 @@ margin-bottom: 0.3rem;
         },
         {
           title: "TOTALLY SPIES - HOUDI",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20TOTALLY%20SPIES%20-%20HOUDI.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/HOUDI-TOTALLY_SPIES.flac",
           img: "https://i.scdn.co/image/ab67616d0000b2732eb5664841e93029aee8cc59",
   duration: 157,
   isSynced: false,
@@ -1984,66 +2006,126 @@ margin-bottom: 0.3rem;
         },
         {
           title: "TU VERRAS - HOUDI",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20TU%20VERRAS%20-%20HOUDI.mp3",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/HOUDI-TU_VERRAS.flac",
           img: "https://i.scdn.co/image/ab67616d0000b27320d84617cc3781797b08c03d",
   duration: 158,
   isSynced: false,
   lyricsUrlSynced: "SYNC",
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/refs/heads/main/ParolesTuverrasNonsyncro.txt"
         },
+        {
+          title: "Diamond - Houdi",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/HOUDI-DIAMOND.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b27320d84617cc3781797b08c03d",
+  duration: 175,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesDiamond.txt"
+        },
+        {
+          title: "Bonbonne - Houdi",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/HOUDI-BONBONNE.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b27340b359d8c7f56e94975f1a53",
+  duration: 160,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesBonbonne.txt"
+        },
+        {
+          title: "Sunsex - Houdi",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/HOUDI-SUNSEX.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b2732d5bc9ea7c57c95a96b29b24",
+  duration: 144,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesSunsex.txt"
+        },
+        {
+          title: "Médicament - Houdi Ft Anyme",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/HOUDI-MEDICAMENT.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b273524954f7ece093e92a7ef525",
+  duration: 186,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesMedicament.txt"
+        }
 
       ],
 
-      "Soprano": [
+      "TK": [
         {
-          title: "En feu - Soprano",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20En%20feu%20-%20Soprano.mp3",
-          img: "https://i.scdn.co/image/ab67616d0000b27339505eb7ec495325624dabee",
-  duration: 205,
+          title: "Faut pas deconner - TK",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/TK-Faut_pas_deconner.flac",
+          img: "https://i.scdn.co/image/ab67616d00001e0226f30ce50652e6d81c3a801c",
+  duration: 163,
   isSynced: false,
-  lyricsUrlSynced: "SYNC",
-  lyricsUrlText: "TEXT"
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/Parolesfautpasdeconner.txt"
         },
         {
-          title: "Cosmo - Soprano",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Cosmo%20-%20Soprano.mp3",
-          img: "https://i.scdn.co/image/ab67616d0000b27320224ac0714054cd2ca38388",
-  duration: 183,
+          title: "Cocotier - TK",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/TK-Cocotier.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b273f0a4d47060af0b217bba3c18",
+  duration: 152,
   isSynced: false,
-  lyricsUrlSynced: "SYNC",
-  lyricsUrlText: "TEXT"
-
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesCocotier.txt"
         },
         {
-          title: "Le coach - Soprano ft Vincenzo",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Le%20coach%20(feat.%20Vincenzo)%20-%20Soprano.mp3",
-          img: "https://i.scdn.co/image/ab67616d0000b273c9bf61eae3cacb8e0321907e",
-  duration: 200,
+          title: "Mon Crush a Moi - TK Ft Gambi",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/TK-Mon_Crush_a_Moi.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b273528efcc26a0f3ace552bb315",
+  duration: 129,
   isSynced: false,
-  lyricsUrlSynced: "SYNC",
-  lyricsUrlText: "TEXT"
-
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesMoncrushamoi.txt"
         },
         {
-          title: "Marius - Soprano",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Marius%20-%20Soprano.mp3",
-          img: "https://i1.sndcdn.com/artworks-0e38960c-722b-4130-8484-9d72066827de-0-t240x240.jpg",
-  duration: 155,
+          title: "Dans La Gova - TK",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/TK-Dans_La_Gova.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b27379b3c2ae8438265081e04923",
+  duration: 185,
   isSynced: false,
   lyricsUrlSynced: "SYNC",
-  lyricsUrlText: "TEXT"
-
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/refs/heads/main/ParolesDanslagovaNonsyncro.txt"
         },
         {
-          title: "Mon précieux - Soprano",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Mon%20pr%C3%A9cieux%20-%20Soprano.mp3",
-          img: "https://i.scdn.co/image/ab67616d00001e0239505eb7ec495325624dabee",
-  duration: 263,
+          title: "On vas s'oublier - TK",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/TK-On_vas_s_oublier.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b273014041d8ba3c6f6c0948466d",
+  duration: 142,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/Parolesonvasoublier.txt"
+        },
+        {
+          title: "Monoï Paillettes - TK",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/TK-Monoi_Paillettes.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b2730d56897b6e516e76ab77adbe",
+  duration: 151,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesMonoipaillettes.txt"
+        },
+        {
+          title: "La nourrice - TK",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/TK-La_nourrice.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b2730bef0bdc6be9ae6066e963d1",
+  duration: 180,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesLanourrice.txt"
+        },
+        {
+          title: "Je pense plus à toi - TK",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/TK-Je_pense_plus_a_toi.flac",
+          img: "https://i.scdn.co/image/ab67616d0000b273f82915fb2f9959b2ba44a33a",
+  duration: 166,
   isSynced: false,
   lyricsUrlSynced: "SYNC",
-  lyricsUrlText: "TEXT"
-
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/refs/heads/main/ParolesJepensesplus%C3%A0toiNonsyncro.txt"
         }
+
 
       ],
 
@@ -2190,26 +2272,6 @@ margin-bottom: 0.3rem;
   isSynced: false,
   lyricsUrlSynced: "SYNC",
   lyricsUrlText: "TEXT"
-
-        },
-        {
-          title: "Je pense plus à toi - TK",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Je%20pense%20plus%20%C3%A0%20toi%20-%20TK.mp3",
-          img: "https://i.scdn.co/image/ab67616d0000b273f82915fb2f9959b2ba44a33a",
-  duration: 166,
-  isSynced: false,
-  lyricsUrlSynced: "SYNC",
-  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/refs/heads/main/ParolesJepensesplus%C3%A0toiNonsyncro.txt"
-
-        },
-        {
-          title: "Dans La Gova - TK",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Dans%20La%20Gova%20-%20TK.mp3",
-          img: "https://i.scdn.co/image/ab67616d0000b27379b3c2ae8438265081e04923",
-  duration: 185,
-  isSynced: false,
-  lyricsUrlSynced: "SYNC",
-  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/refs/heads/main/ParolesDanslagovaNonsyncro.txt"
 
         },
         {
@@ -3207,7 +3269,15 @@ function syncFullPlayer() {
   document.getElementById('fullShuffleBtn').classList.toggle('active', isShuffle);
   document.getElementById('fullRepeatBtn').classList.toggle('active', isRepeat);
   const isPlaying = !audio.paused;
-  document.getElementById('fullPlayPauseBtn').textContent = isPlaying ? "⏸️" : "▶️";
+  if (isPlaying) {
+    fullPlayPauseBtn.classList.add('playing');
+    document.getElementById('fullPlayIcon').style.display = 'none';
+    document.getElementById('fullPauseIcon').style.display = '';
+  } else {
+    fullPlayPauseBtn.classList.remove('playing');
+    document.getElementById('fullPlayIcon').style.display = '';
+    document.getElementById('fullPauseIcon').style.display = 'none';
+  }
 
   // Sync paroles
   const fullLyricsDisplay = document.getElementById('fullLyricsDisplay');
@@ -3316,12 +3386,16 @@ audio.addEventListener('timeupdate', () => {
 // Sync play/pause
 audio.addEventListener('play', () => {
   miniPlayPauseBtn.textContent = "⏸️";
-  fullPlayPauseBtn.textContent = "⏸️";
+  fullPlayPauseBtn.classList.add('playing');
+  document.getElementById('fullPlayIcon').style.display = 'none';
+  document.getElementById('fullPauseIcon').style.display = '';
   if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
 });
 audio.addEventListener('pause', () => {
   miniPlayPauseBtn.textContent = "▶️";
-  fullPlayPauseBtn.textContent = "▶️";
+  fullPlayPauseBtn.classList.remove('playing');
+  document.getElementById('fullPlayIcon').style.display = '';
+  document.getElementById('fullPauseIcon').style.display = 'none';
   if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
 });
 
