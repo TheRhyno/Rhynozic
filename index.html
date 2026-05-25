@@ -772,7 +772,7 @@ margin-bottom: 0.3rem;
   #statsBtn:hover { background:rgba(255,255,255,0.3); }
   #statsScreen { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:#0a0a0a; z-index:5000; flex-direction:column; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; touch-action:pan-y; padding-bottom:40px; }
   #statsScreen.visible { display:flex; }
-  .stats-header { background:linear-gradient(135deg,#FF0000 0%,#8B0000 100%); padding:20px 16px 30px; position:relative; text-align:center; flex-shrink:0; }
+  .stats-header { background:linear-gradient(135deg,#DA22FF 0%,#4776E6 50%,#FF0050 100%); padding:20px 16px 30px; position:relative; text-align:center; flex-shrink:0; }
   .stats-header-close { position:absolute; left:12px; top:12px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer; padding:6px; }
   .stats-header h1 { margin:8px 0 4px; font-size:1.6rem; font-weight:900; letter-spacing:1px; }
   .stats-header p { margin:0; font-size:0.85rem; opacity:0.8; }
@@ -782,39 +782,106 @@ margin-bottom: 0.3rem;
   .stats-card-icon { font-size:1.8rem; }
   .stats-card-value { font-size:1.6rem; font-weight:900; color:#fff; line-height:1; margin-top:4px; }
   .stats-card-label { font-size:0.75rem; color:#888; text-transform:uppercase; letter-spacing:0.5px; }
-  .stats-card.red { background:linear-gradient(135deg,#FF0000 0%,#8B0000 100%); }
-  .stats-card.green { background:linear-gradient(135deg,#1db954 0%,#0d7a35 100%); }
-  .stats-card.blue { background:linear-gradient(135deg,#1e90ff 0%,#0a4a8a 100%); }
-  .stats-card.orange { background:linear-gradient(135deg,#ff6b00 0%,#a83d00 100%); }
-  .stats-card.purple { background:linear-gradient(135deg,#9b59b6 0%,#5a1a8a 100%); }
+  .stats-card.red    { background: linear-gradient(135deg, #FF0050 0%, #FF6B35 100%); }
+  .stats-card.green  { background: linear-gradient(135deg, #00C9A7 0%, #00728C 100%); }
+  .stats-card.blue   { background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%); }
+  .stats-card.orange { background: linear-gradient(135deg, #F7971E 0%, #FFD200 100%); color: #1a1a1a; }
+  .stats-card.purple { background: linear-gradient(135deg, #DA22FF 0%, #9733EE 100%); }
+  .stats-card.teal   { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: #1a1a1a; }
+  .stats-card.pink   { background: linear-gradient(135deg, #f953c6 0%, #b91d73 100%); }
+  .stats-card.gold   { background: linear-gradient(135deg, #F09819 0%, #EDDE5D 100%); color: #1a1a1a; }
+  .stats-card.ice    { background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%); color: #1a1a1a; }
+  .stats-card.night  { background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); }
   .stats-section-title { font-size:0.9rem; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:1px; padding:8px 16px 0; }
   .stats-top-list { padding:0 16px; display:flex; flex-direction:column; gap:8px; }
   .stats-top-item { display:flex; align-items:center; gap:12px; background:#1a1a1a; border-radius:12px; padding:10px 12px; animation:fadeUp 0.5s ease both; }
-  .stats-top-rank { font-size:1.1rem; font-weight:900; color:#FF0000; width:24px; text-align:center; flex-shrink:0; }
+  .stats-top-rank { font-size:1.1rem; font-weight:900; color:#f953c6; width:24px; text-align:center; flex-shrink:0; }
   .stats-top-img { width:44px; height:44px; border-radius:8px; object-fit:cover; flex-shrink:0; }
   .stats-top-info { flex:1; overflow:hidden; }
   .stats-top-title { font-size:0.9rem; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .stats-top-sub { font-size:0.75rem; color:#888; margin-top:2px; }
   .stats-top-bar-wrap { width:60px; height:4px; background:#333; border-radius:2px; overflow:hidden; flex-shrink:0; }
-  .stats-top-bar { height:100%; background:#FF0000; border-radius:2px; transition:width 1s ease; }
+  .stats-top-bar { height:100%; background:linear-gradient(90deg,#f953c6,#FF6B35); border-radius:2px; transition:width 1s ease; }
   .stats-artist-row { display:flex; align-items:center; gap:10px; padding:8px 16px; animation:fadeUp 0.5s ease both; }
   .stats-artist-name { font-size:0.9rem; font-weight:bold; flex-shrink:0; width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .stats-artist-bar-wrap { flex:1; height:6px; background:#333; border-radius:3px; overflow:hidden; }
-  .stats-artist-bar { height:100%; background:linear-gradient(90deg,#FF0000,#ff6b00); border-radius:3px; transition:width 1.2s ease; }
+  .stats-artist-bar { height:100%; background:linear-gradient(90deg,#DA22FF,#4776E6); border-radius:3px; transition:width 1.2s ease; }
   .stats-artist-count { font-size:0.8rem; color:#888; flex-shrink:0; width:40px; text-align:right; }
   .stats-heatmap { padding:0 16px; display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
   .stats-heatmap-cell { aspect-ratio:1; border-radius:4px; background:#222; }
-  .stats-heatmap-cell.h1 { background:#4a0000; }
-  .stats-heatmap-cell.h2 { background:#8B0000; }
-  .stats-heatmap-cell.h3 { background:#CC0000; }
-  .stats-heatmap-cell.h4 { background:#FF0000; }
+  .stats-heatmap-cell.h1 { background:#2d1b4e; }
+  .stats-heatmap-cell.h2 { background:#6a1fc2; }
+  .stats-heatmap-cell.h3 { background:#b24bf3; }
+  .stats-heatmap-cell.h4 { background:#f953c6; }
   .stats-hours-bars { padding:0 16px; display:flex; gap:3px; align-items:flex-end; height:80px; }
   .stats-hour-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end; gap:2px; }
-  .stats-hour-bar { width:100%; background:#FF0000; border-radius:3px 3px 0 0; min-height:2px; transition:height 1s ease; opacity:0.8; }
+  .stats-hour-bar { width:100%; background:linear-gradient(180deg,#4776E6,#8E54E9); border-radius:3px 3px 0 0; min-height:2px; transition:height 1s ease; opacity:0.9; }
   .stats-hour-label { font-size:0.55rem; color:#555; }
   .stats-reset-btn { margin:20px 16px 0; background:#1a1a1a; border:1px solid #333; color:#888; padding:12px; border-radius:12px; font-size:0.85rem; cursor:pointer; width:calc(100% - 32px); text-align:center; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
   @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+
+  /* ===== ÉCRAN DÉTAIL PAIEMENTS ===== */
+  #statsPayScreen { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:#0a0a0a; z-index:6500; flex-direction:column; overflow:hidden; }
+  #statsPayScreen.visible { display:flex; }
+  .stats-pay-header { background:linear-gradient(135deg,#1db954 0%,#0d7a35 100%); padding:16px; display:flex; align-items:center; gap:12px; flex-shrink:0; }
+  .stats-pay-close { background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer; padding:4px 8px; }
+  .stats-pay-header-info { flex:1; }
+  .stats-pay-header-title { font-size:1rem; font-weight:bold; }
+  .stats-pay-header-sub { font-size:0.8rem; opacity:0.8; margin-top:2px; }
+  .stats-pay-list { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; touch-action:pan-y; }
+  .stats-pay-item { display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid #1a1a1a; }
+  .stats-pay-artist-img { width:44px; height:44px; border-radius:50%; object-fit:cover; flex-shrink:0; }
+  .stats-pay-artist-icon { width:44px; height:44px; border-radius:50%; background:#222; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
+  .stats-pay-info { flex:1; overflow:hidden; }
+  .stats-pay-name { font-size:0.95rem; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .stats-pay-streams { font-size:0.75rem; color:#888; margin-top:2px; }
+  .stats-pay-amount { text-align:right; flex-shrink:0; }
+  .stats-pay-euros { font-size:1.1rem; font-weight:900; color:#1db954; }
+  .stats-pay-rate { font-size:0.7rem; color:#555; margin-top:1px; }
+  .stats-pay-total-bar { background:#111; padding:14px 16px; border-top:1px solid #222; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
+  .stats-pay-total-label { font-size:0.85rem; color:#888; }
+  .stats-pay-total-value { font-size:1.3rem; font-weight:900; color:#1db954; }
+
+  /* ===== VOIR TOUT — ÉCRAN LISTE COMPLÈTE ===== */
+  #statsAllScreen {
+    display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+    background:#0a0a0a; z-index:6000; flex-direction:column;
+    overflow:hidden;
+  }
+  #statsAllScreen.visible { display:flex; }
+  .stats-all-header {
+    background:#1a1a1a; padding:16px; display:flex;
+    align-items:center; gap:12px; flex-shrink:0;
+    border-bottom:1px solid #333;
+  }
+  .stats-all-close {
+    background:none; border:none; color:#fff;
+    font-size:1.5rem; cursor:pointer; padding:4px 8px;
+  }
+  .stats-all-title { font-size:1rem; font-weight:bold; flex:1; }
+  .stats-all-sort {
+    background:#333; border:none; color:#fff;
+    font-size:0.8rem; padding:6px 10px; border-radius:20px; cursor:pointer;
+  }
+  .stats-all-list {
+    flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; touch-action:pan-y;
+  }
+  .stats-all-item {
+    display:flex; align-items:center; gap:12px;
+    padding:10px 16px; border-bottom:1px solid #1a1a1a;
+  }
+  .stats-all-rank { font-size:0.85rem; color:#555; width:22px; text-align:center; flex-shrink:0; }
+  .stats-all-img { width:40px; height:40px; border-radius:6px; object-fit:cover; flex-shrink:0; }
+  .stats-all-info { flex:1; overflow:hidden; }
+  .stats-all-title-text { font-size:0.85rem; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .stats-all-sub { font-size:0.75rem; color:#666; margin-top:2px; }
+  .stats-all-time { font-size:0.8rem; color:#888; flex-shrink:0; text-align:right; }
+  .stats-voir-tout-btn {
+    margin:8px 16px 0; background:#222; border:1px solid #333;
+    color:#fff; padding:12px; border-radius:12px; font-size:0.9rem;
+    cursor:pointer; width:calc(100% - 32px); text-align:center; font-weight:bold;
+  }
   </style>
 
 </head>
@@ -896,6 +963,7 @@ margin-bottom: 0.3rem;
   <!-- Top 10 sons -->
   <div class="stats-section-title">🏆 Top sons</div>
   <div class="stats-top-list" id="statsTopTracks"></div>
+  <button class="stats-voir-tout-btn" onclick="openAllTracks()">Voir tous les sons →</button>
 
   <!-- Top artistes -->
   <div class="stats-section-title" style="margin-top:12px">🎤 Top artistes</div>
@@ -911,6 +979,32 @@ margin-bottom: 0.3rem;
 
   <!-- Bouton reset -->
   <button class="stats-reset-btn" onclick="resetStats()">🗑️ Réinitialiser mes stats</button>
+</div>
+
+<!-- ===== ÉCRAN DÉTAIL PAIEMENTS PAR ARTISTE ===== -->
+<div id="statsPayScreen">
+  <div class="stats-pay-header">
+    <button class="stats-pay-close" onclick="closePayDetail()">←</button>
+    <div class="stats-pay-header-info">
+      <div class="stats-pay-header-title">💸 Revenus estimés des artistes</div>
+      <div class="stats-pay-header-sub">Basé sur 0,004€ par stream (moyenne Spotify)</div>
+    </div>
+  </div>
+  <div class="stats-pay-list" id="statsPayList"></div>
+  <div class="stats-pay-total-bar">
+    <div class="stats-pay-total-label">Total versé aux artistes</div>
+    <div class="stats-pay-total-value" id="statsPayTotal">0,00 €</div>
+  </div>
+</div>
+
+<!-- ===== ÉCRAN TOUS LES SONS ===== -->
+<div id="statsAllScreen">
+  <div class="stats-all-header">
+    <button class="stats-all-close" onclick="closeAllTracks()">←</button>
+    <div class="stats-all-title">Tous les sons</div>
+    <button class="stats-all-sort" onclick="toggleAllSort()">↕️ <span id="allSortLabel">Écoutes</span></button>
+  </div>
+  <div class="stats-all-list" id="statsAllList"></div>
 </div>
 
 
@@ -1069,7 +1163,7 @@ margin-bottom: 0.3rem;
         },
         {
           title: "Amnésia - Jul",
-          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Jul-Amnesia.flac",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Jul-Amnesia.mp3",
           img: "https://i1.sndcdn.com/artworks-WE4PYbLMftzs-0-t500x500.jpg",
   duration: 132,
   isSynced: false,
@@ -1379,12 +1473,12 @@ margin-bottom: 0.3rem;
         },
         {
           title: "Lacrizeotiek - Jul",
-          url: "TEST",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Jul-Lacrizeotiek.mp3",
           img: "https://i.scdn.co/image/ab67616d0000b273af79c714da4e523b60573b21",
   duration: 326,
   isSynced: false,
   lyricsUrlSynced: "SYNCRO",
-  lyricsUrlText: "TEST"
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesLacrizeotiekNonsyncro.txt"
         },
         {
           title: "Tu tenenew - Jul",
@@ -1543,6 +1637,15 @@ margin-bottom: 0.3rem;
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesRomanzocriminelNonsyncro.txt"
         },
         {
+          title: "Tié un tigre - Jul",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Jul-Tie_un_tigre.mp3",
+          img: "https://i.scdn.co/image/ab67616d0000b2733b34412fb2ac7137dd255155",
+  duration: 305,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolestieuntigreNonsyncro.txt"
+        },
+        {
           title: "Paix à toi - Jul",
           url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Jul-Paix_a_toi.flac",
           img: "https://i.scdn.co/image/ab67616d0000b2733b34412fb2ac7137dd255155",
@@ -1651,6 +1754,33 @@ margin-bottom: 0.3rem;
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesJetaimaisbienNonsyncro.txt"
         },
         {
+          title: "Pour un violet - Jul",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Jul-Pour_un_violet.mp3",
+          img: "https://i.scdn.co/image/ab67616d0000b273160968e91c16801cf89f2275",
+  duration: 254,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesPourunvioletNonsyncro.txt"
+        },
+        {
+          title: "Superstar - Jul",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Jul-Superstar.mp3",
+          img: "https://i.scdn.co/image/ab67616d0000b273b1fcea8d4db8bdbfa15356e7",
+  duration: 234,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesSuperstarNonsyncro.txt"
+        },
+        {
+          title: "Faut que je me tire de là - Jul",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Jul-Faut_que_je_me_tire_de_la.mp3",
+          img: "https://i.scdn.co/image/ab67616d0000b273a6fa48d12eea7e21d9f46373",
+  duration: 245,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesFautquejemetiredelaNonsyncro.txt"
+        },
+        {
           title: "Mimi - Jul",
           url: "TEST",
           img: "TESTTESTTEST",
@@ -1659,8 +1789,6 @@ margin-bottom: 0.3rem;
   lyricsUrlSynced: "SYNCRO",
   lyricsUrlText: "TEST"
         }
-
-
 
 
 
@@ -3141,7 +3269,15 @@ const nowPlayingObserver = new MutationObserver(() => {
   const track = filteredPlaylist[currentTrack];
   if (!track) return;
   miniThumb.src = track.img;
-  miniTitle.textContent = track.title;
+  // Séparer titre et artiste (format "Titre - Artiste")
+  const di = track.title.lastIndexOf(' - ');
+  if (di !== -1) {
+    miniTitle.textContent = track.title.substring(0, di).trim();
+    document.getElementById('miniSub').textContent = track.title.substring(di + 3).trim();
+  } else {
+    miniTitle.textContent = track.title;
+    document.getElementById('miniSub').textContent = 'Rhynozic';
+  }
   miniPlayer.classList.add('visible');
   syncFullPlayer();
 });
@@ -3422,7 +3558,6 @@ function saveStats(s) {
 
 // Appelé à chaque playTrack
 function statsTrackPlay(track) {
-  const s = loadStats();
   const key = track.url || track.title;
 
   // Extraire artiste
@@ -3431,49 +3566,72 @@ function statsTrackPlay(track) {
   const di = track.title.lastIndexOf(' - ');
   if (di !== -1) { title = track.title.substring(0, di).trim(); artist = track.title.substring(di+3).trim(); }
 
-  if (!s.plays[key]) s.plays[key] = { title, artist, img: track.img, count: 0, seconds: 0 };
-  s.plays[key].count++;
-  s.plays[key].img = track.img;
-
-  if (!s.firstListenDate) s.firstListenDate = new Date().toISOString();
-
-  // Heure courante
-  const hour = new Date().getHours();
-  if (!s.hourBuckets) s.hourBuckets = new Array(24).fill(0);
-  s.hourBuckets[hour] = (s.hourBuckets[hour] || 0) + 1;
-
-  // Streak
-  const today = new Date().toISOString().slice(0, 10);
-  if (s.lastStreakDate !== today) {
-    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-    if (s.lastStreakDate === yesterday) {
-      s.streak = (s.streak || 0) + 1;
-    } else if (s.lastStreakDate !== today) {
-      s.streak = 1;
-    }
-    s.lastStreakDate = today;
-  }
-
-  // Journalier init
-  if (!s.dailyMinutes[today]) s.dailyMinutes[today] = 0;
-
-  saveStats(s);
-
-  // Tracker les secondes en live
+  // Arrêter l'intervalle précédent
   if (window._statsInterval) clearInterval(window._statsInterval);
+  if (window._statsCountTimeout) clearTimeout(window._statsCountTimeout);
+
+  // On ne touche PAS au localStorage avant 30 secondes
+  // Seul un compteur local en mémoire tourne
   window._statsTrackKey = key;
+  window._statsTrackMeta = { title, artist, img: track.img };
+  window._statsCountedThisPlay = false;
+  window._statsLocalSecs = 0; // compteur local, rien sauvegardé avant 30s
+
+  // Ticker les secondes en live
   window._statsInterval = setInterval(() => {
-    if (!audio.paused) {
+    if (audio.paused) return;
+
+    window._statsLocalSecs++;
+
+    // ── Avant 30s : rien du tout dans le localStorage ──
+    if (window._statsLocalSecs < 30) return;
+
+    // ── À exactement 30s : créer l'entrée ET compter l'écoute ──
+    if (window._statsLocalSecs === 30) {
       const st = loadStats();
-      if (st.plays[window._statsTrackKey]) {
-        st.plays[window._statsTrackKey].seconds = (st.plays[window._statsTrackKey].seconds || 0) + 1;
-        st.totalSeconds = (st.totalSeconds || 0) + 1;
-        const d = new Date().toISOString().slice(0, 10);
-        if (!st.dailyMinutes[d]) st.dailyMinutes[d] = 0;
-        st.dailyMinutes[d] = parseFloat((st.dailyMinutes[d] + 1/60).toFixed(4));
-        saveStats(st);
+      const k = window._statsTrackKey;
+      const meta = window._statsTrackMeta;
+
+      // Créer l'entrée seulement maintenant
+      if (!st.plays[k]) st.plays[k] = { title: meta.title, artist: meta.artist, img: meta.img, count: 0, seconds: 0 };
+      st.plays[k].img = meta.img;
+      st.plays[k].count = (st.plays[k].count || 0) + 1;
+      st.plays[k].seconds = (st.plays[k].seconds || 0) + 30;
+      st.totalSeconds = (st.totalSeconds || 0) + 30;
+
+      // firstListenDate
+      if (!st.firstListenDate) st.firstListenDate = new Date().toISOString();
+
+      // Heure
+      const hour = new Date().getHours();
+      if (!st.hourBuckets) st.hourBuckets = new Array(24).fill(0);
+      st.hourBuckets[hour] = (st.hourBuckets[hour] || 0) + 1;
+
+      // Streak
+      const today = new Date().toISOString().slice(0, 10);
+      if (!st.dailyMinutes[today]) st.dailyMinutes[today] = 0;
+      st.dailyMinutes[today] = parseFloat((st.dailyMinutes[today] + 30/60).toFixed(4));
+      if (st.lastStreakDate !== today) {
+        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        st.streak = (st.lastStreakDate === yesterday) ? (st.streak || 0) + 1 : 1;
+        st.lastStreakDate = today;
       }
+
+      saveStats(st);
+      return;
     }
+
+    // ── Après 30s : juste accumuler le temps ──
+    const st = loadStats();
+    const k = window._statsTrackKey;
+    if (!st.plays[k]) return; // sécurité
+
+    st.plays[k].seconds = (st.plays[k].seconds || 0) + 1;
+    st.totalSeconds = (st.totalSeconds || 0) + 1;
+    const d = new Date().toISOString().slice(0, 10);
+    if (!st.dailyMinutes[d]) st.dailyMinutes[d] = 0;
+    st.dailyMinutes[d] = parseFloat((st.dailyMinutes[d] + 1/60).toFixed(4));
+    saveStats(st);
   }, 1000);
 }
 
@@ -3511,29 +3669,33 @@ function renderStats() {
 
   // ── Cartes chiffres clés ──
   const streak = s.streak || 0;
+  // Calcul argent total (0.004€ par stream validé)
+  const RATE = 0.004;
+  const totalMoney = (totalPlays * RATE).toFixed(2).replace('.', ',');
+
   const grid = document.getElementById('statsCardsGrid');
   grid.innerHTML = `
-    <div class="stats-card red">
-      <div class="stats-card-icon">🔥</div>
-      <div class="stats-card-value">${streak}</div>
-      <div class="stats-card-label">Jours de suite</div>
+    <div class="stats-card teal" onclick="openPayDetail()" style="cursor:pointer;">
+      <div class="stats-card-icon">💸</div>
+      <div class="stats-card-value">${totalMoney} €</div>
+      <div class="stats-card-label">Versé aux artistes ↗</div>
     </div>
-    <div class="stats-card green">
+    <div class="stats-card blue">
       <div class="stats-card-icon">⏱️</div>
       <div class="stats-card-value">${totalHours}h</div>
       <div class="stats-card-label">Temps d'écoute</div>
     </div>
-    <div class="stats-card blue">
+    <div class="stats-card pink">
       <div class="stats-card-icon">▶️</div>
       <div class="stats-card-value">${totalPlays}</div>
       <div class="stats-card-label">Lectures totales</div>
     </div>
-    <div class="stats-card orange">
+    <div class="stats-card gold">
       <div class="stats-card-icon">🎵</div>
       <div class="stats-card-value">${uniqueTracks}</div>
       <div class="stats-card-label">Sons écoutés</div>
     </div>
-    <div class="stats-card purple full">
+    <div class="stats-card night full">
       <div class="stats-card-icon">📆</div>
       <div class="stats-card-value">${Object.keys(s.dailyMinutes||{}).length > 0 ? Math.round(totalMin / Object.keys(s.dailyMinutes).length) : 0} min</div>
       <div class="stats-card-label">Moyenne par jour d'écoute</div>
@@ -3576,9 +3738,9 @@ function renderStats() {
   const topArtistByTime = Object.entries(artistMap).sort((a,b)=>b[1].seconds-a[1].seconds)[0];
   const topArtistName = topArtistByTime ? topArtistByTime[0] : '—';
   const topArtistMins = topArtistByTime ? Math.floor(topArtistByTime[1].seconds / 60) : 0;
-  // Trouver une image de l'artiste de l'année
+  // Photo artiste depuis le dictionnaire artistPhotos
   const topArtistImg = topArtistByTime
-    ? (sorted.find(t => t.artist === topArtistByTime[0]) || {}).img || ''
+    ? (artistPhotos[topArtistByTime[0]] || '')
     : '';
 
   const artEl = document.getElementById('statsArtists');
@@ -3586,7 +3748,7 @@ function renderStats() {
 
   // Carte artiste de l'année (pleine largeur, avant les barres)
   artEl.innerHTML += `
-    <div style="margin:8px 16px 4px; background:linear-gradient(135deg,#FF0000 0%,#8B0000 100%); border-radius:16px; padding:16px; display:flex; align-items:center; gap:14px; animation:fadeUp 0.5s ease both;">
+    <div style="margin:8px 16px 4px; background:linear-gradient(135deg,#f953c6 0%,#4776E6 100%); border-radius:16px; padding:16px; display:flex; align-items:center; gap:14px; animation:fadeUp 0.5s ease both;">
       ${topArtistImg ? `<img src="${topArtistImg}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,0.3)" />` : '<div style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem">🎤</div>'}
       <div>
         <div style="font-size:0.7rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:1px;font-weight:bold">⭐ Artiste de l'année</div>
@@ -3644,6 +3806,128 @@ function renderStats() {
       el.style.width = el.dataset.pct + '%';
     });
   }, 100);
+}
+
+
+const artistPhotos = {
+  "Jul": "https://i.scdn.co/image/ab67616100005174aa70253f73793a0ff061069e",
+ 
+};
+
+// ================================================================
+// VOIR TOUS LES SONS
+// ================================================================
+let allSortMode = 'count'; // 'count' ou 'time'
+
+function openAllTracks() {
+  renderAllTracks();
+  document.getElementById('statsAllScreen').classList.add('visible');
+}
+function closeAllTracks() {
+  document.getElementById('statsAllScreen').classList.remove('visible');
+}
+function toggleAllSort() {
+  allSortMode = allSortMode === 'count' ? 'time' : 'count';
+  document.getElementById('allSortLabel').textContent = allSortMode === 'count' ? 'Écoutes' : 'Temps';
+  renderAllTracks();
+}
+function renderAllTracks() {
+  const s = loadStats();
+  const plays = s.plays || {};
+  const all = Object.values(plays);
+
+  // Tri
+  if (allSortMode === 'count') {
+    all.sort((a, b) => b.count - a.count);
+  } else {
+    all.sort((a, b) => (b.seconds || 0) - (a.seconds || 0));
+  }
+
+  const listEl = document.getElementById('statsAllList');
+  if (!all.length) {
+    listEl.innerHTML = '<div style="padding:40px;text-align:center;color:#555">Aucune écoute pour l\'instant</div>';
+    return;
+  }
+
+  listEl.innerHTML = all.map((t, i) => {
+    const mins = Math.floor((t.seconds || 0) / 60);
+    const secs = (t.seconds || 0) % 60;
+    const timeStr = mins > 0 ? `${mins}m${secs.toString().padStart(2,'0')}s` : `${secs}s`;
+    return `
+      <div class="stats-all-item">
+        <div class="stats-all-rank">${i + 1}</div>
+        <img class="stats-all-img" src="${t.img || ''}" onerror="this.style.display='none'" />
+        <div class="stats-all-info">
+          <div class="stats-all-title-text">${t.title}</div>
+          <div class="stats-all-sub">${t.artist}</div>
+        </div>
+        <div class="stats-all-time">
+          <div style="color:#fff;font-weight:bold">${t.count} ×</div>
+          <div style="font-size:0.72rem;margin-top:1px">${timeStr}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ================================================================
+// DÉTAIL PAIEMENTS PAR ARTISTE
+// ================================================================
+const SPOTIFY_RATE = 0.004; // €/stream
+
+function openPayDetail() {
+  renderPayDetail();
+  document.getElementById('statsPayScreen').classList.add('visible');
+}
+function closePayDetail() {
+  document.getElementById('statsPayScreen').classList.remove('visible');
+}
+function renderPayDetail() {
+  const s = loadStats();
+  const plays = s.plays || {};
+
+  // Agréger par artiste (streams validés = count >= 1)
+  const artistMap = {};
+  Object.values(plays).forEach(t => {
+    const name = t.artist || 'Inconnu';
+    if (!artistMap[name]) artistMap[name] = { count: 0, img: artistPhotos[name] || '' };
+    artistMap[name].count += (t.count || 0);
+  });
+
+  const artists = Object.entries(artistMap)
+    .sort((a, b) => b[1].count - a[1].count)
+    .filter(([, d]) => d.count > 0);
+
+  const total = artists.reduce((sum, [, d]) => sum + d.count * SPOTIFY_RATE, 0);
+
+  // Total
+  document.getElementById('statsPayTotal').textContent =
+    total.toFixed(2).replace('.', ',') + ' €';
+
+  // Liste
+  const list = document.getElementById('statsPayList');
+  if (!artists.length) {
+    list.innerHTML = '<div style="padding:40px;text-align:center;color:#555">Aucun stream validé pour l\'instant<br><span style="font-size:0.8rem;margin-top:8px;display:block">Il faut écouter un son plus de 30 secondes</span></div>';
+    return;
+  }
+
+  list.innerHTML = artists.map(([name, data], i) => {
+    const euros = (data.count * SPOTIFY_RATE).toFixed(4).replace('.', ',');
+    const imgHtml = data.img
+      ? `<img class="stats-pay-artist-img" src="${data.img}" onerror="this.style.display='none'" />`
+      : `<div class="stats-pay-artist-icon">🎤</div>`;
+    return `
+      <div class="stats-pay-item" style="animation:fadeUp 0.4s ease ${i*0.05}s both">
+        ${imgHtml}
+        <div class="stats-pay-info">
+          <div class="stats-pay-name">${name}</div>
+          <div class="stats-pay-streams">${data.count} stream${data.count > 1 ? 's' : ''} validé${data.count > 1 ? 's' : ''}</div>
+        </div>
+        <div class="stats-pay-amount">
+          <div class="stats-pay-euros">${euros} €</div>
+          <div class="stats-pay-rate">× 0,004 €</div>
+        </div>
+      </div>`;
+  }).join('');
 }
 
   </script>
