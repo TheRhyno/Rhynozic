@@ -3,7 +3,7 @@
 //  ⚡ Pour déclencher une mise à jour : changer APP_VERSION
 // ============================================================
 
-const APP_VERSION  = 'v1.0.8';
+const APP_VERSION  = 'v1.0.9';
 const CACHE_NAME   = `rhynozic-shell-${APP_VERSION}`;
 const AUDIO_CACHE  = `rhynozic-audio-${APP_VERSION}`;
 const IMG_CACHE    = `rhynozic-img-${APP_VERSION}`;
