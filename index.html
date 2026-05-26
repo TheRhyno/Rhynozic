@@ -903,6 +903,25 @@ margin-bottom: 0.3rem;
     color:#fff; padding:12px; border-radius:12px; font-size:0.9rem;
     cursor:pointer; width:calc(100% - 32px); text-align:center; font-weight:bold;
   }
+
+  /* ===== SÉLECTEUR DE PÉRIODE ===== */
+  .stats-period-bar {
+    display:flex; gap:6px; padding:10px 16px 4px;
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+    scrollbar-width:none; flex-shrink:0;
+  }
+  .stats-period-bar::-webkit-scrollbar { display:none; }
+  .stats-period-btn {
+    flex-shrink:0; background:#1a1a1a; border:1px solid #333;
+    color:#aaa; font-size:0.75rem; font-weight:bold;
+    padding:6px 14px; border-radius:20px; cursor:pointer;
+    transition:background 0.2s, color 0.2s, border-color 0.2s;
+    white-space:nowrap;
+  }
+  .stats-period-btn.active {
+    background:linear-gradient(135deg,#DA22FF,#4776E6);
+    border-color:transparent; color:#fff;
+  }
   </style>
 
 </head>
@@ -978,6 +997,17 @@ margin-bottom: 0.3rem;
     <p id="statsHeaderSub">Chargement...</p>
   </div>
 
+  <!-- Sélecteur de période -->
+  <div class="stats-period-bar" id="statsPeriodBar">
+    <button class="stats-period-btn active" data-period="all"    onclick="setStatsPeriod('all',this)">Tout</button>
+    <button class="stats-period-btn"         data-period="7"     onclick="setStatsPeriod('7',this)">7 jours</button>
+    <button class="stats-period-btn"         data-period="30"    onclick="setStatsPeriod('30',this)">30 jours</button>
+    <button class="stats-period-btn"         data-period="90"    onclick="setStatsPeriod('90',this)">3 mois</button>
+    <button class="stats-period-btn"         data-period="365"   onclick="setStatsPeriod('365',this)">Cette année</button>
+    <button class="stats-period-btn"         data-period="month" onclick="setStatsPeriod('month',this)">Ce mois</button>
+    <button class="stats-period-btn"         data-period="week"  onclick="setStatsPeriod('week',this)">Cette semaine</button>
+  </div>
+
   <!-- Cartes chiffres clés -->
   <div class="stats-grid" id="statsCardsGrid"></div>
 
@@ -991,7 +1021,7 @@ margin-bottom: 0.3rem;
   <div id="statsArtists"></div>
 
   <!-- Heatmap activité 28 jours -->
-  <div class="stats-section-title" style="margin-top:12px">📅 Activité (28 derniers jours)</div>
+  <div class="stats-section-title" style="margin-top:12px" id="statsHeatmapTitle">📅 Activité (28 derniers jours)</div>
   <div class="stats-heatmap" id="statsHeatmap"></div>
 
   <!-- Répartition horaire -->
@@ -1951,6 +1981,15 @@ margin-bottom: 0.3rem;
 
       "Anyme & Houdi": [
         {
+          title: "NYC to Paris - Anyme",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Anyme-NYC_to_Paris.mp3",
+          img: "https://images.genius.com/341d3670382fe175a444cd6d93fbaaff.300x169x1.jpg",
+  duration: 114,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesNYCtoparis.txt"
+        },
+        {
           title: "Toute la nuit - Anyme",
           url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/GP_Explorer-Toute_la_nuit.flac",
           img: "https://i.scdn.co/image/ab67616d0000b273387935d4b38e2ad48c64916d",
@@ -1958,6 +1997,15 @@ margin-bottom: 0.3rem;
   isSynced: false,
   lyricsUrlSynced: "SYNC",
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/main/ParolesToutelanuit.txt"
+        },
+        {
+          title: "Bonbon - Anyme",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Anyme-Bonbon.mp3",
+          img: "https://i.ytimg.com/vi/KkMnpNycrB8/maxresdefault.jpg",
+  duration: 112,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
         },
         {
           title: "Shamballa - Shaydee's Ft Anyme",
@@ -2134,6 +2182,62 @@ margin-bottom: 0.3rem;
 
 
       "Divers": [
+        {
+          title: "J'me balade sur Paname - CZ Loco",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Cz_Loco-J_me_balade_sur_Paname.mp3",
+          img: "https://i.ytimg.com/vi/P22hmYlzi50/maxresdefault.jpg",
+  duration: 185,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Sous son verre - CZ Loco Ft Ilies & DB",
+          url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/CZ_Loco-Sous_son_verre.flac",
+          img: "https://i.scdn.co/image/ab67616d00001e022bb12d89fe6d4aff2fc9c103",
+  duration: 164,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Mimi - Gims",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Mimi - Gims",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Mimi - Gims",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Mimi - Gims",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+
+
         {
           title: "Espresso Macchiato - Tommy Cash",
           url: "https://raw.githubusercontent.com/TheRhyno/Musiques/main/SpotiDownloader.com%20-%20Espresso%20Macchiato%20-%20Tommy%20Cash.mp3",
@@ -2728,19 +2832,52 @@ function seekFromEvent(e) {
 
 function updateMediaSession(track) {
   if ('mediaSession' in navigator) {
+    // Extraire titre / artiste depuis le format "Titre - Artiste"
+    let songTitle = track.title || "Titre inconnu";
+    let artistName = track.artist || "Rhynozic";
+    const dashIdx = (track.title || "").lastIndexOf(' - ');
+    if (dashIdx !== -1) {
+      songTitle  = track.title.substring(0, dashIdx).trim();
+      artistName = track.title.substring(dashIdx + 3).trim();
+    }
+
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: track.title || "Titre inconnu",
-      artist: track.artist || "Artiste inconnu",
+      title: songTitle,
+      artist: artistName,
+      album: 'Rhynozic',
       artwork: [
-        { src: track.img || '', sizes: '512x512', type: 'image/jpeg' }
+        { src: track.img || '', sizes: '96x96',   type: 'image/jpeg' },
+        { src: track.img || '', sizes: '256x256',  type: 'image/jpeg' },
+        { src: track.img || '', sizes: '512x512',  type: 'image/jpeg' }
       ]
     });
 
-    // Optionnel : lier les boutons de la notif à vos fonctions
-    navigator.mediaSession.setActionHandler('play', () => audio.play());
-    navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-    navigator.mediaSession.setActionHandler('previoustrack', () => playPrev()); // Remplacez par votre fonction
-    navigator.mediaSession.setActionHandler('nexttrack', () => playNext());     // Remplacez par votre fonction
+    // Handlers systèmes — permettent le contrôle depuis l'écran verrouillé / fond
+    navigator.mediaSession.setActionHandler('play', () => {
+      audio.play();
+      playPauseBtn.textContent = "⏸️";
+      navigator.mediaSession.playbackState = 'playing';
+    });
+    navigator.mediaSession.setActionHandler('pause', () => {
+      audio.pause();
+      playPauseBtn.textContent = "▶️";
+      navigator.mediaSession.playbackState = 'paused';
+    });
+    // nexttrack : vérifie tempQueue en priorité, puis passe à la suite dans la playlist
+    navigator.mediaSession.setActionHandler('nexttrack', () => nextTrack());
+    // previoustrack : gestion double-tap / recommencement via prevTrack()
+    navigator.mediaSession.setActionHandler('previoustrack', () => prevTrack());
+    navigator.mediaSession.setActionHandler('seekto', (details) => {
+      if (details.seekTime !== undefined) audio.currentTime = details.seekTime;
+    });
+    navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+      audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset || 10));
+    });
+    navigator.mediaSession.setActionHandler('seekforward', (details) => {
+      audio.currentTime = Math.min(audio.duration, audio.currentTime + (details.seekOffset || 10));
+    });
+
+    navigator.mediaSession.playbackState = 'playing';
   }
 }
 
@@ -2774,74 +2911,48 @@ updateMediaSession(track);
     }, 500);
   }
 
-  // ===== MEDIA SESSION API (notification système) =====
-  if ('mediaSession' in navigator) {
-    // Extraire artiste depuis le titre (format "Titre - Artiste")
-    let artistName = 'Rhynozic';
-    let songTitle = track.title;
-    const dashIdx = track.title.lastIndexOf(' - ');
-    if (dashIdx !== -1) {
-      songTitle = track.title.substring(0, dashIdx).trim();
-      artistName = track.title.substring(dashIdx + 3).trim();
-    }
-
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: songTitle,
-      artist: artistName,
-      album: 'Rhynozic',
-      artwork: [
-        { src: track.img, sizes: '96x96',   type: 'image/jpeg' },
-        { src: track.img, sizes: '128x128',  type: 'image/jpeg' },
-        { src: track.img, sizes: '192x192',  type: 'image/jpeg' },
-        { src: track.img, sizes: '256x256',  type: 'image/jpeg' },
-        { src: track.img, sizes: '384x384',  type: 'image/jpeg' },
-        { src: track.img, sizes: '512x512',  type: 'image/jpeg' },
-      ]
-    });
-
-    navigator.mediaSession.setActionHandler('play', () => {
-      audio.play();
-      playPauseBtn.textContent = "⏸️";
-      navigator.mediaSession.playbackState = 'playing';
-    });
-    navigator.mediaSession.setActionHandler('pause', () => {
-      audio.pause();
-      playPauseBtn.textContent = "▶️";
-      navigator.mediaSession.playbackState = 'paused';
-    });
-    navigator.mediaSession.setActionHandler('nexttrack', () => {
-      nextTrack();
-    });
-    navigator.mediaSession.setActionHandler('previoustrack', () => {
-      prevTrack();
-    });
-    navigator.mediaSession.setActionHandler('seekto', (details) => {
-      if (details.seekTime !== undefined) {
-        audio.currentTime = details.seekTime;
-      }
-    });
-    navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-      audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset || 10));
-    });
-    navigator.mediaSession.setActionHandler('seekforward', (details) => {
-      audio.currentTime = Math.min(audio.duration, audio.currentTime + (details.seekOffset || 10));
-    });
-
-    navigator.mediaSession.playbackState = 'playing';
-  }
 }
 
 
 
 // Bouton play/pause
+// ── Persistance : horodatage de la dernière mise en pause ──
+let _pausedAt = null; // Date.now() au moment de la pause, null si en lecture
+
 function togglePlay() {
   if (!audio.src) return;
+
   if (audio.paused) {
-    audio.play();
-    playPauseBtn.textContent = "⏸️";
+    // ── 1. Persistance de l'état : rechargement si pause trop longue ──
+    // Si la source a été mise en pause depuis plus de 5 minutes, certains
+    // navigateurs mobiles purgent le buffer réseau. On recharge alors la
+    // source en conservant la position courante avant de relancer la lecture.
+    const STALE_THRESHOLD_MS = 5 * 60 * 1000; // 5 minutes
+    const savedTime = audio.currentTime;
+    const pausedTooLong = _pausedAt !== null && (Date.now() - _pausedAt) > STALE_THRESHOLD_MS;
+
+    // ── 2. Détection d'un contexte audio suspendu par le navigateur ──
+    // readyState < HAVE_FUTURE_DATA (< 3) indique que l'élément n'a plus
+    // assez de données pour reprendre immédiatement → même traitement.
+    const audioStale = pausedTooLong || audio.readyState < 3; // HTMLMediaElement.HAVE_FUTURE_DATA = 3
+
+    if (audioStale && audio.src) {
+      // Recharge la source sans la modifier, puis restaure la position
+      audio.load();
+      audio.currentTime = savedTime;
+    }
+
+    audio.play().then(() => {
+      playPauseBtn.textContent = "⏸️";
+      _pausedAt = null; // Réinitialise le chronomètre de pause
+    }).catch(() => {
+      // Échec de lecture (ex : autoplay bloqué) — on ne change pas l'icône
+    });
+
   } else {
     audio.pause();
     playPauseBtn.textContent = "▶️";
+    _pausedAt = Date.now(); // Démarre le chronomètre de pause
   }
 }
 
@@ -3027,6 +3138,34 @@ audio.onended = () => {
     nextTrack(); // Utilise la nouvelle version qui regarde dans tempQueue
   }
 };
+
+// ── 3. Synchronisation Media Session ↔ état réel de l'audio ──
+// Ces listeners natifs se déclenchent quelle que soit l'origine de
+// l'événement (bouton UI, notification système, écran verrouillé, OS…).
+// Ils garantissent que le système d'exploitation considère toujours le
+// lecteur comme "actif", ce qui évite qu'il soit tué en arrière-plan.
+audio.addEventListener('play', () => {
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.playbackState = 'playing';
+  }
+  playPauseBtn.textContent = "⏸️";
+  // Bouton full player si visible
+  const fpBtn = document.getElementById('fullPlayPauseBtn');
+  if (fpBtn) fpBtn.textContent = "⏸️";
+  _pausedAt = null; // La lecture a repris : on réinitialise le chronomètre
+});
+
+audio.addEventListener('pause', () => {
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.playbackState = 'paused';
+  }
+  playPauseBtn.textContent = "";
+  // Bouton full player si visible
+  const fpBtn = document.getElementById('fullPlayPauseBtn');
+  if (fpBtn) fpBtn.textContent = "";
+  // Ne pas écraser _pausedAt s'il a déjà été positionné par togglePlay
+  if (_pausedAt === null) _pausedAt = Date.now();
+});
 
 
 // Recherche dans playlist
@@ -3709,6 +3848,76 @@ function statsTrackPlay(track) {
   }, 1000);
 }
 
+// ── Période active pour les stats ──
+let _statsPeriod = 'all'; // 'all' | '7' | '30' | '90' | '365' | 'month' | 'week'
+
+function setStatsPeriod(period, btn) {
+  _statsPeriod = period;
+  document.querySelectorAll('.stats-period-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderStats();
+}
+
+// Retourne un objet stats filtré selon la période courante
+function getFilteredStats() {
+  const s = loadStats();
+  if (_statsPeriod === 'all') return s;
+
+  const now = Date.now();
+  let cutoff;
+
+  if (_statsPeriod === 'week') {
+    // Lundi de la semaine courante
+    const d = new Date(); d.setHours(0,0,0,0);
+    d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+    cutoff = d.toISOString().slice(0,10);
+  } else if (_statsPeriod === 'month') {
+    const d = new Date(); d.setDate(1); d.setHours(0,0,0,0);
+    cutoff = d.toISOString().slice(0,10);
+  } else {
+    // N derniers jours
+    const days = parseInt(_statsPeriod);
+    cutoff = new Date(now - days * 86400000).toISOString().slice(0,10);
+  }
+
+  // Filtrer dailyMinutes
+  const filteredDaily = {};
+  Object.entries(s.dailyMinutes || {}).forEach(([date, mins]) => {
+    if (date >= cutoff) filteredDaily[date] = mins;
+  });
+
+  // Recalculer totalSeconds depuis dailyMinutes filtrés
+  const filteredTotalSec = Math.round(Object.values(filteredDaily).reduce((a,b)=>a+b,0) * 60);
+
+  // Pour les plays : on a besoin du détail par date.
+  // Les plays globaux (count/seconds) ne sont pas datés, donc pour les périodes
+  // on utilise dailyMinutes comme proxy du temps mais on ne peut pas filtrer
+  // les plays individuels par date (ils ne sont pas horodatés dans le stockage).
+  // On retourne donc les plays complets mais avec les totaux recalculés depuis dailyMinutes.
+  // Cela donne des chiffres cohérents pour temps/streak tout en conservant les tops.
+  const filtered = Object.assign({}, s);
+  filtered.dailyMinutes = filteredDaily;
+  filtered.totalSeconds = filteredTotalSec;
+
+  // Streak recalculé sur la période
+  const days = Object.keys(filteredDaily).sort();
+  let streak = 0, prev = null;
+  days.forEach(d => {
+    if (!prev) { streak = 1; }
+    else {
+      const diff = (new Date(d) - new Date(prev)) / 86400000;
+      streak = diff === 1 ? streak + 1 : 1;
+    }
+    prev = d;
+  });
+  filtered.streak = streak;
+
+  // firstListenDate = premier jour de la période avec activité
+  filtered.firstListenDate = days.length ? new Date(days[0]).toISOString() : null;
+
+  return filtered;
+}
+
 function openStats() {
   renderStats();
   document.getElementById('statsScreen').classList.add('visible');
@@ -3719,12 +3928,14 @@ function closeStats() {
 function resetStats() {
   if (confirm('Réinitialiser toutes tes stats ?')) {
     localStorage.removeItem(STATS_KEY);
+    _statsPeriod = 'all';
+    document.querySelectorAll('.stats-period-btn').forEach(b => b.classList.toggle('active', b.dataset.period === 'all'));
     renderStats();
   }
 }
 
 function renderStats() {
-  const s = loadStats();
+  const s = getFilteredStats();
   const plays = s.plays || {};
   const totalSec = s.totalSeconds || 0;
   const totalMin = Math.floor(totalSec / 60);
@@ -3735,11 +3946,14 @@ function renderStats() {
   const totalPlays = sorted.reduce((a, b) => a + b.count, 0);
   const uniqueTracks = sorted.length;
 
-  // Header sub
+  // Header sub — adapté à la période
+  const periodLabels = { all:'Toutes périodes', '7':'7 derniers jours', '30':'30 derniers jours', '90':'3 derniers mois', '365':'Cette année', month:'Ce mois-ci', week:'Cette semaine' };
+  const periodLabel = periodLabels[_statsPeriod] || 'Toutes périodes';
   const since = s.firstListenDate
     ? new Date(s.firstListenDate).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' })
-    : 'maintenant';
-  document.getElementById('statsHeaderSub').textContent = `Depuis le ${since}`;
+    : null;
+  document.getElementById('statsHeaderSub').textContent =
+    _statsPeriod === 'all' && since ? `Depuis le ${since}` : periodLabel;
 
   // ── Cartes chiffres clés ──
   const streak = s.streak || 0;
@@ -3843,18 +4057,36 @@ function renderStats() {
   });
   if (!artists.length) artEl.innerHTML += '<div style="padding:16px;color:#555;text-align:center">Aucune donnée</div>';
 
-  // ── Heatmap 28 jours ──
+  // ── Heatmap adaptée à la période ──
   const hm = document.getElementById('statsHeatmap');
   hm.innerHTML = '';
   const daily = s.dailyMinutes || {};
   const maxDay = Math.max(...Object.values(daily), 1);
-  for (let i = 27; i >= 0; i--) {
+
+  // Nombre de jours à afficher selon la période
+  let hmDays = 28;
+  if (_statsPeriod === 'week') hmDays = 7;
+  else if (_statsPeriod === '7') hmDays = 7;
+  else if (_statsPeriod === '30' || _statsPeriod === 'month') hmDays = 30;
+  else if (_statsPeriod === '90') hmDays = 90;
+  else if (_statsPeriod === '365') hmDays = 365;
+  else hmDays = 28;
+
+  // Ajuster les colonnes de la grille
+  const hmCols = hmDays <= 7 ? 7 : hmDays <= 30 ? 10 : hmDays <= 90 ? 13 : 26;
+  hm.style.gridTemplateColumns = `repeat(${hmCols},1fr)`;
+
+  for (let i = hmDays - 1; i >= 0; i--) {
     const d = new Date(Date.now() - i * 86400000).toISOString().slice(0,10);
     const mins = daily[d] || 0;
     let cls = '';
     if (mins > 0) cls = mins < maxDay*0.25 ? 'h1' : mins < maxDay*0.5 ? 'h2' : mins < maxDay*0.75 ? 'h3' : 'h4';
     hm.innerHTML += `<div class="stats-heatmap-cell ${cls}" title="${d}: ${Math.round(mins)} min"></div>`;
   }
+
+  // Mise à jour du titre de section heatmap
+  const hmTitles = { all:'📅 Activité (28 derniers jours)', '7':'📅 Activité (7 derniers jours)', '30':'📅 Activité (30 derniers jours)', '90':'📅 Activité (3 derniers mois)', '365':'📅 Activité (cette année)', month:'📅 Activité (ce mois)', week:'📅 Activité (cette semaine)' };
+  document.getElementById('statsHeatmapTitle').textContent = hmTitles[_statsPeriod] || '📅 Activité (28 derniers jours)';
 
   // ── Répartition horaire ──
   const hb = s.hourBuckets || new Array(24).fill(0);
@@ -3885,6 +4117,13 @@ function renderStats() {
 
 const artistPhotos = {
   "Jul": "https://i.scdn.co/image/ab67616100005174aa70253f73793a0ff061069e",
+  "Houdi": "https://i.scdn.co/image/ab6761610000e5ebdbeb13a42ed44e86b6116579",
+  "Gradur Ft Jul": "https://i.scdn.co/image/ab6761610000e5ebd4fd2d73f9e95981f59fa670",
+  "Jul Ft Bengous": "https://i.scdn.co/image/ab6761610000e5ebef0469aa8bb0adf1e65ff9e1",
+  "Anyme": "https://i.scdn.co/image/ab6761610000e5eb042bcdcca552bd688c767f3e",
+  "Anyme Ft Houdi": "https://i.scdn.co/image/ab6761610000e5eb042bcdcca552bd688c767f3e",
+  "SCH / Kofs / Jul / Naps / Soso Maness / Elams / Solda / Houari": "https://i.scdn.co/image/ab67616d0000b273f7df8ac7362a0ab57a3ae120",
+  "TK": "https://i.scdn.co/image/ab6761610000e5eb3ab022e7f717c88e53f3a52a",
  
 };
 
