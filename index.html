@@ -291,6 +291,20 @@ html, body {
   font-size: 1.4rem;
   cursor: pointer;
   padding: 4px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, transform 0.12s;
+}
+.mini-player-controls button:hover {
+  background: rgba(255,255,255,0.1);
+}
+.mini-player-controls button:active {
+  transform: scale(0.88);
+  background: rgba(255,0,0,0.18);
 }
 .mini-progress {
   position: absolute;
@@ -366,25 +380,65 @@ html, body {
 .full-player-controls {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin: 16px 0 0;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 0 8px;
 }
+/* ── Full player : boutons secondaires (shuffle, prev, next, repeat) ── */
 .full-player-controls button {
   background: none;
   border: none;
-  color: #fff;
-  font-size: 1.6rem;
+  color: rgba(255,255,255,0.75);
+  font-size: 1.5rem;
   cursor: pointer;
-  padding: 6px;
-  transition: color 0.2s;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.18s, background 0.18s, transform 0.12s;
+  flex-shrink: 0;
 }
-.full-player-controls button.active { color: #1db954; }
+.full-player-controls button:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+}
+.full-player-controls button:active {
+  transform: scale(0.88);
+}
+.full-player-controls button.active {
+  color: #FF0000;
+  background: rgba(255, 0, 0, 0.15);
+  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.7));
+}
+.full-player-controls button.active svg {
+  stroke: #FF0000;
+  fill: none;
+}
+/* petit point indicateur sous le bouton actif */
+.full-player-controls button.active::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #FF0000;
+  box-shadow: 0 0 6px #FF0000;
+}
+.full-player-controls button {
+  position: relative;
+}
 
-/* ===== BOUTON PLAY/PAUSE CIRCULAIRE ===== */
+/* ── Bouton Play/Pause principal ── */
 .full-player-controls #fullPlayPauseBtn {
   position: relative;
-  width: 68px;
-  height: 68px;
+  width: 72px;
+  height: 72px;
   border-radius: 50% !important;
   background: #fff !important;
   color: #000 !important;
@@ -393,13 +447,21 @@ html, body {
   align-items: center;
   justify-content: center;
   padding: 0 !important;
-  box-shadow: 0 4px 20px rgba(255,255,255,0.2);
-  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+  box-shadow:
+    0 0 0 6px rgba(255,255,255,0.08),
+    0 8px 32px rgba(0,0,0,0.5);
+  transition: transform 0.13s cubic-bezier(.34,1.56,.64,1), box-shadow 0.15s ease !important;
   flex-shrink: 0;
 }
+.full-player-controls #fullPlayPauseBtn:hover {
+  background: #f0f0f0 !important;
+  box-shadow:
+    0 0 0 10px rgba(255,255,255,0.1),
+    0 10px 40px rgba(0,0,0,0.6);
+}
 .full-player-controls #fullPlayPauseBtn:active {
-  transform: scale(0.90);
-  box-shadow: 0 2px 10px rgba(255,255,255,0.1);
+  transform: scale(0.91) !important;
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4) !important;
 }
 .full-progress-bar {
   width: 85%;
@@ -1067,8 +1129,15 @@ margin-bottom: 0.3rem;
     <div class="mini-player-sub" id="miniSub">Rhynozic</div>
   </div>
   <div class="mini-player-controls">
-    <button onclick="event.stopPropagation(); togglePlay()" id="miniPlayPauseBtn">▶️</button>
-    <button onclick="event.stopPropagation(); nextTrack()">⏭️</button>
+    <button onclick="event.stopPropagation(); togglePlay()" id="miniPlayPauseBtn" aria-label="Play/Pause">
+      <svg id="miniPlayIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+      <svg id="miniPauseIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    </button>
+    <button onclick="event.stopPropagation(); nextTrack()" aria-label="Suivant">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 18l8.5-6L6 6v12zm2.5-6 5.5 3.9V8.1L8.5 12zM16 6h2v12h-2z"/>
+      </svg>
+    </button>
   </div>
 </div>
 
@@ -1084,14 +1153,35 @@ margin-bottom: 0.3rem;
   <div class="full-player-title" id="fullTitle">Choisissez un morceau</div>
 
   <div class="full-player-controls">
-    <button onclick="toggleShuffle()" id="fullShuffleBtn" title="Shuffle">🔀</button>
-    <button onclick="prevTrack()">⏮️</button>
-    <button onclick="togglePlay()" id="fullPlayPauseBtn" aria-label="Play/Pause">
-      <svg id="fullPlayIcon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px"><polygon points="5,3 19,12 5,21"/></svg>
-      <svg id="fullPauseIcon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    <!-- Shuffle -->
+    <button onclick="toggleShuffle()" id="fullShuffleBtn" title="Aléatoire">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/>
+      </svg>
     </button>
-    <button onclick="nextTrack()">⏭️</button>
-    <button onclick="toggleRepeat()" id="fullRepeatBtn" title="Repeat">🔁</button>
+    <!-- Précédent -->
+    <button onclick="prevTrack()" title="Précédent">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+      </svg>
+    </button>
+    <!-- Play/Pause -->
+    <button onclick="togglePlay()" id="fullPlayPauseBtn" aria-label="Play/Pause">
+      <svg id="fullPlayIcon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px"><polygon points="5,3 19,12 5,21"/></svg>
+      <svg id="fullPauseIcon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    </button>
+    <!-- Suivant -->
+    <button onclick="nextTrack()" title="Suivant">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 18l8.5-6L6 6v12zm2.5-6 5.5 3.9V8.1L8.5 12zM16 6h2v12h-2z"/>
+      </svg>
+    </button>
+    <!-- Répéter -->
+    <button onclick="toggleRepeat()" id="fullRepeatBtn" title="Répéter">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+      </svg>
+    </button>
   </div>
 
   <div class="full-progress-bar" id="fullProgressBar">
@@ -1427,7 +1517,7 @@ margin-bottom: 0.3rem;
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/refs/heads/main/ParolesInspidailleursNonsyncro.txt"
         },
         {
-          title: "Comme d'hab - Jul / Aonzo",
+          title: "Comme d'hab - Jul / Alonzo",
           url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/Jul-Comme_d_hab.flac",
           img: "https://i1.sndcdn.com/artworks-PYezzF735ef9-0-t500x500.jpg",
   duration: 203,
@@ -2044,7 +2134,7 @@ margin-bottom: 0.3rem;
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/refs/heads/main/ParolesAilleursNonSyncro.txt"
         },
         {
-          title: "TOTALLY SPIES - HOUDI",
+          title: "TOTALLY SPIES - Houdi",
           url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/HOUDI-TOTALLY_SPIES.flac",
           img: "https://i.scdn.co/image/ab67616d0000b2732eb5664841e93029aee8cc59",
   duration: 157,
@@ -2053,7 +2143,7 @@ margin-bottom: 0.3rem;
   lyricsUrlText: "https://raw.githubusercontent.com/TheRhyno/Paroles/refs/heads/main/ParolesTotallyspiesNonSyncro.txt"
         },
         {
-          title: "TU VERRAS - HOUDI",
+          title: "TU VERRAS - Houdi",
           url: "https://raw.githubusercontent.com/TheRhyno/Musiques2/main/HOUDI-TU_VERRAS.flac",
           img: "https://i.scdn.co/image/ab67616d0000b27320d84617cc3781797b08c03d",
   duration: 158,
@@ -2099,6 +2189,86 @@ margin-bottom: 0.3rem;
         }
 
       ],
+
+
+
+      "PLK": [
+
+        {
+          title: "Mimi - PLK",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Mimi - PLK",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Mimi - PLK",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Mimi - PLK",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Mimi - PLK",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Mimi - PLK",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+        {
+          title: "Mimi - PLK",
+          url: "TEST",
+          img: "TESTTESTTEST",
+  duration: 219,
+  isSynced: false,
+  lyricsUrlSynced: "SYNCRO",
+  lyricsUrlText: "TEST"
+        },
+
+
+
+
+
+
+
+
+
+
+
+
 
       "TK": [
         {
@@ -2976,12 +3146,14 @@ function nextTrack() {
 function toggleShuffle() {
   isShuffle = !isShuffle;
   shuffleBtn.classList.toggle("active", isShuffle);
+  document.getElementById('fullShuffleBtn').classList.toggle('active', isShuffle);
 }
 
 // Repeat toggle
 function toggleRepeat() {
   isRepeat = !isRepeat;
   repeatBtn.classList.toggle("active", isRepeat);
+  document.getElementById('fullRepeatBtn').classList.toggle('active', isRepeat);
 }
 
 // Volume
@@ -3150,8 +3322,15 @@ audio.addEventListener('play', () => {
   }
   playPauseBtn.textContent = "⏸️";
   // Bouton full player si visible
-  const fpBtn = document.getElementById('fullPlayPauseBtn');
-  if (fpBtn) fpBtn.textContent = "⏸️";
+  const fpPlayIcon = document.getElementById('fullPlayIcon');
+  const fpPauseIcon = document.getElementById('fullPauseIcon');
+  if (fpPlayIcon) fpPlayIcon.style.display = 'none';
+  if (fpPauseIcon) fpPauseIcon.style.display = '';
+  // Bouton mini player
+  const mpi = document.getElementById('miniPlayIcon');
+  const mpa = document.getElementById('miniPauseIcon');
+  if (mpi) mpi.style.display = 'none';
+  if (mpa) mpa.style.display = '';
   _pausedAt = null; // La lecture a repris : on réinitialise le chronomètre
 });
 
@@ -3161,8 +3340,15 @@ audio.addEventListener('pause', () => {
   }
   playPauseBtn.textContent = "";
   // Bouton full player si visible
-  const fpBtn = document.getElementById('fullPlayPauseBtn');
-  if (fpBtn) fpBtn.textContent = "";
+  const fpPlayIcon2 = document.getElementById('fullPlayIcon');
+  const fpPauseIcon2 = document.getElementById('fullPauseIcon');
+  if (fpPlayIcon2) fpPlayIcon2.style.display = '';
+  if (fpPauseIcon2) fpPauseIcon2.style.display = 'none';
+  // Bouton mini player
+  const mpi2 = document.getElementById('miniPlayIcon');
+  const mpa2 = document.getElementById('miniPauseIcon');
+  if (mpi2) mpi2.style.display = '';
+  if (mpa2) mpa2.style.display = 'none';
   // Ne pas écraser _pausedAt s'il a déjà été positionné par togglePlay
   if (_pausedAt === null) _pausedAt = Date.now();
 });
@@ -3524,14 +3710,16 @@ audio.addEventListener('timeupdate', () => {
 
 // Sync play/pause
 audio.addEventListener('play', () => {
-  miniPlayPauseBtn.textContent = "⏸️";
+  document.getElementById('miniPlayIcon').style.display = 'none';
+  document.getElementById('miniPauseIcon').style.display = '';
   fullPlayPauseBtn.classList.add('playing');
   document.getElementById('fullPlayIcon').style.display = 'none';
   document.getElementById('fullPauseIcon').style.display = '';
   if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
 });
 audio.addEventListener('pause', () => {
-  miniPlayPauseBtn.textContent = "▶️";
+  document.getElementById('miniPlayIcon').style.display = '';
+  document.getElementById('miniPauseIcon').style.display = 'none';
   fullPlayPauseBtn.classList.remove('playing');
   document.getElementById('fullPlayIcon').style.display = '';
   document.getElementById('fullPauseIcon').style.display = 'none';
@@ -4118,12 +4306,32 @@ function renderStats() {
 const artistPhotos = {
   "Jul": "https://i.scdn.co/image/ab67616100005174aa70253f73793a0ff061069e",
   "Houdi": "https://i.scdn.co/image/ab6761610000e5ebdbeb13a42ed44e86b6116579",
-  "Gradur Ft Jul": "https://i.scdn.co/image/ab6761610000e5ebd4fd2d73f9e95981f59fa670",
-  "Jul Ft Bengous": "https://i.scdn.co/image/ab6761610000e5ebef0469aa8bb0adf1e65ff9e1",
+  "Gradur": "https://i.scdn.co/image/ab6761610000e5ebd4fd2d73f9e95981f59fa670",
+  "Bengous": "https://i.scdn.co/image/ab6761610000e5ebef0469aa8bb0adf1e65ff9e1",
   "Anyme": "https://i.scdn.co/image/ab6761610000e5eb042bcdcca552bd688c767f3e",
-  "Anyme Ft Houdi": "https://i.scdn.co/image/ab6761610000e5eb042bcdcca552bd688c767f3e",
-  "SCH / Kofs / Jul / Naps / Soso Maness / Elams / Solda / Houari": "https://i.scdn.co/image/ab67616d0000b273f7df8ac7362a0ab57a3ae120",
   "TK": "https://i.scdn.co/image/ab6761610000e5eb3ab022e7f717c88e53f3a52a",
+  "SCH": "https://i.scdn.co/image/ab6761610000e5eb4ed985f33e971801dae4e24d",
+  "Kofs": "https://i.scdn.co/image/ab6761610000e5eb4dcec872a30e15f2f2cf5f6b",
+  "Naps": "https://i.scdn.co/image/ab6761610000e5eb301657b8cb877183b9bc7a77",
+  "Soso Maness": "https://i.scdn.co/image/ab6761610000e5ebed1b1b0bcc43ebd4b23e3e70",
+  "Elams": "https://i.scdn.co/image/ab6761610000e5eb7f79dcfcca6e1e7ee93ad88a",
+  "Solda": "https://i.scdn.co/image/ab67616d0000b27305a6f7c1af5093823ddf9ffc",
+  "Houari": "https://i.scdn.co/image/ab6761610000e5eb95b56eab0e494d329066c359",
+  "Jimmy Sax": "https://i.scdn.co/image/ab6761610000e5eb033baba49203350b0c064273",
+  "Theodora": "https://i.scdn.co/image/ab6761610000e5eb649fa418fc79a8651e8a66c7",
+  "Alonzo": "https://i.scdn.co/image/ab6761610000e5eb2e879fe90ffdef1e7ef2cf0c",
+  "Gims": "https://i.scdn.co/image/ab6761610000e5eb77144f838397a467e807df65",
+  "PLK": "https://i.scdn.co/image/ab6761610000e5ebc0b860256b49e3f681d491eb",
+  "Dika": "https://i.scdn.co/image/ab6761610000e5ebba4e3f6d16ab9229fe62c5c5",
+  "FRANCÈ ZITO": "https://i.scdn.co/image/ab6761610000e5eb5ea2b18e18a3333a4083e858",
+  "Soprano": "https://i.scdn.co/image/ab6761610000e5eb17ae5923f3a2ca783d576dfd",
+  "Morad": "https://i.scdn.co/image/ab6761610000e5ebad6c5175ba73bba50f96c193",
+  "La Mano": "https://i.scdn.co/image/ab67616100005174b70fcbeb7e15c4288db4b9c3",
+  "Werenoi": "https://i.scdn.co/image/ab6761610000e5eb6296c04d12f719f7ea4fe566",
+  "Shaydee's": "https://i.scdn.co/image/ab6761610000e5ebf19625679ee7c2fa86eb637c",
+  "Gambi": "https://i.scdn.co/image/ab6761610000e5ebcb1a1f4998268d530d83b625",
+  "CZ Loco": "https://i.ytimg.com/vi/P22hmYlzi50/maxresdefault.jpg",
+  "TEST": "TEST",
  
 };
 
@@ -4198,19 +4406,27 @@ function renderPayDetail() {
   const s = loadStats();
   const plays = s.plays || {};
 
-  // Agréger par artiste (streams validés = count >= 1)
+  // Sépare un champ artiste en noms individuels
+  const splitArtists = raw => raw.split(/\s*(?:ft\.?|feat\.?|\/)\s*/i).map(n => n.trim()).filter(Boolean);
+
+  // Agréger par artiste INDIVIDUEL : chaque artiste d'un feat reçoit sa part
   const artistMap = {};
   Object.values(plays).forEach(t => {
-    const name = t.artist || 'Inconnu';
-    if (!artistMap[name]) artistMap[name] = { count: 0, img: artistPhotos[name] || '' };
-    artistMap[name].count += (t.count || 0);
+    const raw = t.artist || 'Inconnu';
+    const names = splitArtists(raw);
+    const share = (t.count || 0) / names.length;
+    names.forEach(name => {
+      if (!artistMap[name]) artistMap[name] = { euros: 0, streams: 0, img: artistPhotos[name] || '' };
+      artistMap[name].euros   += share * SPOTIFY_RATE;
+      artistMap[name].streams += share;
+    });
   });
 
   const artists = Object.entries(artistMap)
-    .sort((a, b) => b[1].count - a[1].count)
-    .filter(([, d]) => d.count > 0);
+    .sort((a, b) => b[1].euros - a[1].euros)
+    .filter(([, d]) => d.euros > 0);
 
-  const total = artists.reduce((sum, [, d]) => sum + d.count * SPOTIFY_RATE, 0);
+  const total = artists.reduce((sum, [, d]) => sum + d.euros, 0);
 
   // Total
   document.getElementById('statsPayTotal').textContent =
@@ -4224,7 +4440,8 @@ function renderPayDetail() {
   }
 
   list.innerHTML = artists.map(([name, data], i) => {
-    const euros = (data.count * SPOTIFY_RATE).toFixed(4).replace('.', ',');
+    const euros = data.euros.toFixed(4).replace('.', ',');
+    const streamsAffiche = Math.round(data.streams);
     const imgHtml = data.img
       ? `<img class="stats-pay-artist-img" src="${data.img}" onerror="this.style.display='none'" />`
       : `<div class="stats-pay-artist-icon">🎤</div>`;
@@ -4233,7 +4450,7 @@ function renderPayDetail() {
         ${imgHtml}
         <div class="stats-pay-info">
           <div class="stats-pay-name">${name}</div>
-          <div class="stats-pay-streams">${data.count} stream${data.count > 1 ? 's' : ''} validé${data.count > 1 ? 's' : ''}</div>
+          <div class="stats-pay-streams">${streamsAffiche} stream${streamsAffiche > 1 ? 's' : ''} validé${streamsAffiche > 1 ? 's' : ''}</div>
         </div>
         <div class="stats-pay-amount">
           <div class="stats-pay-euros">${euros} €</div>
