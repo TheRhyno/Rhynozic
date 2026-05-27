@@ -54,6 +54,13 @@
 
 
 
+:root {
+  --accent: #FF0000;
+  --accent-rgb: 255, 0, 0;
+  --accent-bg: rgba(255, 0, 0, 0.15);
+  --player-grad-top: #1a0000;
+}
+
 * {
   box-sizing: border-box;
 -webkit-tap-highlight-color: transparent;
@@ -144,9 +151,9 @@ html, body {
       background: #282828;
     }
     .playlists-sidebar div.active {
-      background: #FF0000;
+      background: var(--accent);
       color: #000;
-      border-left-color: #FF0000;
+      border-left-color: var(--accent);
       font-weight: bold;
     }
 
@@ -218,7 +225,7 @@ html, body {
       transition: background 0.3s, color 0.3s;
     }
     .track:hover, .track.active {
-      background: #FF0000;
+      background: var(--accent);
       color: #000;
     }
 
@@ -304,16 +311,16 @@ html, body {
 }
 .mini-player-controls button:active {
   transform: scale(0.88);
-  background: rgba(255,0,0,0.18);
+  background: rgba(var(--accent-rgb), 0.18);
 }
 .mini-progress {
   position: absolute;
   bottom: 0;
   left: 0;
   height: 3px;
-  background: #FF0000;
+  background: var(--accent);
   width: 0%;
-  transition: width 0.5s linear;
+  transition: width 0.5s linear, background 0.8s ease;
 }
 
 /* ===== FULL SCREEN PLAYER (style Spotify) ===== */
@@ -321,7 +328,7 @@ html, body {
   display: flex;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(180deg, #1a0000 0%, #181818 60%);
+  background: linear-gradient(180deg, var(--player-grad-top) 0%, #181818 60%);
   z-index: 3000;
   flex-direction: column;
   align-items: center;
@@ -329,7 +336,7 @@ html, body {
   padding-bottom: 30px;
   /* Animation slide */
   transform: translateY(100%);
-  transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+  transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1), background 0.8s ease;
   will-change: transform;
 }
 .full-player.visible {
@@ -409,9 +416,9 @@ html, body {
   transform: scale(0.88);
 }
 .full-player-controls button.active {
-  color: #FF0000;
-  background: rgba(255, 0, 0, 0.15);
-  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.7));
+  color: var(--accent);
+  background: var(--accent-bg);
+  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.7));
 }
 .full-player-controls button.active svg {
   stroke: #FF0000;
@@ -427,8 +434,8 @@ html, body {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #FF0000;
-  box-shadow: 0 0 6px #FF0000;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
 }
 .full-player-controls button {
   position: relative;
@@ -474,10 +481,11 @@ html, body {
 }
 .full-progress {
   height: 5px;
-  background: #FF0000;
+  background: var(--accent);
   width: 0;
   border-radius: 3px;
   pointer-events: none;
+  transition: background 0.8s ease;
 }
 .full-time-info {
   width: 85%;
@@ -521,10 +529,11 @@ html, body {
   display: none;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(180deg, #2a0000 0%, #111 70%);
+  background: linear-gradient(180deg, var(--player-grad-top) 0%, #111 70%);
   z-index: 4000;
   flex-direction: column;
   overflow: hidden;
+  transition: background 0.8s ease;
 }
 .lyrics-screen.visible { display: flex; }
 
@@ -581,7 +590,7 @@ html, body {
   justify-content: center;
 }
 .lyrics-mode-toggle {
-  background: #FF0000;
+  background: var(--accent);
   color: #000;
   border: none;
   padding: 10px 20px;
@@ -592,7 +601,7 @@ html, body {
 }
 /* ligne courante surlignée en mode sync */
 .lyrics-screen-body .current-lyric {
-  color: #FF0000;
+  color: var(--accent);
   font-weight: bold;
   font-size: 18px;
 }
@@ -663,7 +672,7 @@ margin-bottom: 0.3rem;
     }
     .progress {
       height: 5px;
-      background: #FF0000;
+      background: var(--accent);
       width: 0;
       border-radius: 3px;
     }
@@ -732,8 +741,8 @@ margin-bottom: 0.3rem;
 
 
 #toggleLyricsModeBtn {
-  background-color: #FF0000; /* rouge vif */
-  color: #000;               /* texte noir */
+  background-color: var(--accent);
+  color: #000;
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
@@ -749,7 +758,7 @@ margin-bottom: 0.3rem;
 }
 
 #toggleLyricsModeBtn:hover {
-  background-color: #FF0000; /* rouge un peu plus foncé au hover */
+  background-color: var(--accent);
 }
 
 .bottom-blank {
@@ -765,20 +774,41 @@ margin-bottom: 0.3rem;
 
 
 .add-to-tempQueue-btn {
-  /* pas besoin de position absolute, juste style simple */
-  background-color: #4CAF50;
-  color: white;
+  background: transparent;
+  color: rgba(255,255,255,0.4);
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.18s ease, background 0.18s ease, transform 0.13s cubic-bezier(.34,1.56,.64,1);
 }
 
 .add-to-tempQueue-btn:hover {
-  background-color: #45a049;
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+}
+
+.add-to-tempQueue-btn:active {
+  transform: scale(0.82);
+}
+
+.add-to-tempQueue-btn.added {
+  color: #1db954;
+  background: rgba(29,185,84,0.15);
+  transform: scale(1.18);
+}
+
+.track.active .add-to-tempQueue-btn {
+  color: rgba(0,0,0,0.4);
+}
+.track.active .add-to-tempQueue-btn:hover {
+  color: #000;
+  background: rgba(0,0,0,0.12);
 }
 
 
@@ -2658,18 +2688,19 @@ function displayPlaylist() {
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
 
-  let totalDurationText = "⏱️ Durée totale : ";
+  let totalDurationText = "⏱️ ";
   if (hours > 0) {
     totalDurationText += `${hours}h `;
   }
   totalDurationText += `${minutes}min`;
 
-  // 🏷️ Affiche la durée totale au-dessus de la playlist
+  // 🏷️ Affiche la durée totale + nombre de sons au-dessus de la playlist
   const durationDiv = document.createElement("div");
   durationDiv.style.padding = "8px";
   durationDiv.style.fontWeight = "bold";
   durationDiv.style.color = "#555";
-  durationDiv.textContent = totalDurationText;
+  const trackCount = filteredPlaylist.length;
+  durationDiv.textContent = `${totalDurationText}  ·  🎵 ${trackCount} son${trackCount > 1 ? 's' : ''}`;
   playlistDiv.appendChild(durationDiv);
 
   filteredPlaylist.forEach((track, index) => {
@@ -2714,8 +2745,9 @@ function displayPlaylist() {
 
     // Bouton ajouter au dossier invisible
     const addButton = document.createElement("button");
-    addButton.textContent = "+";
+    addButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
     addButton.title = "Ajouter à la file d'attente";
+    addButton.classList.add("add-to-tempQueue-btn");
 
     // Décalage automatique à droite
     addButton.style.marginLeft = "auto";
@@ -2723,7 +2755,13 @@ function displayPlaylist() {
     addButton.onclick = (e) => {
       e.stopPropagation(); // éviter de lancer playTrack en même temps
       addToQueue(index); // ajoute la piste à tempQueue
-      alert(`"${track.title}" ajouté à la file d'attente !`);
+      // Feedback visuel : check vert pendant 900ms, sans alert
+      addButton.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+      addButton.classList.add("added");
+      setTimeout(() => {
+        addButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+        addButton.classList.remove("added");
+      }, 900);
     };
 
     // Ajout image + texte + bouton dans la div track
@@ -2975,6 +3013,68 @@ function updateMediaSession(track) {
 
 
 
+// ================================================================
+// THÈME DYNAMIQUE PAR COVER
+// ================================================================
+function getDominantColor(imgEl, callback) {
+  try {
+    const canvas = document.createElement('canvas');
+    canvas.width = 50;
+    canvas.height = 50;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(imgEl, 0, 0, 50, 50);
+    const data = ctx.getImageData(0, 0, 50, 50).data;
+    let r = 0, g = 0, b = 0, count = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+      // Ignorer pixels trop sombres ou trop clairs
+      if (brightness > 35 && brightness < 210) {
+        r += data[i]; g += data[i+1]; b += data[i+2];
+        count++;
+      }
+    }
+    if (count === 0) { callback(255, 0, 0); return; }
+    callback(Math.round(r/count), Math.round(g/count), Math.round(b/count));
+  } catch(e) {
+    // CORS ou autre erreur → couleur par défaut
+    callback(255, 0, 0);
+  }
+}
+
+function applyDynamicTheme(imgSrc) {
+  const tempImg = new Image();
+  tempImg.crossOrigin = "anonymous";
+  tempImg.onload = () => {
+    getDominantColor(tempImg, (r, g, b) => {
+      // Amplifier la saturation pour un rendu plus vivant
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      const boost = 1.4;
+      const br = Math.min(255, Math.round(128 + (r - 128) * boost));
+      const bg = Math.min(255, Math.round(128 + (g - 128) * boost));
+      const bb = Math.min(255, Math.round(128 + (b - 128) * boost));
+
+      const root = document.documentElement;
+      root.style.setProperty('--accent',          `rgb(${br},${bg},${bb})`);
+      root.style.setProperty('--accent-rgb',       `${br}, ${bg}, ${bb}`);
+      root.style.setProperty('--accent-bg',        `rgba(${br},${bg},${bb},0.15)`);
+      // Gradient plus sombre pour le fond du player
+      const dr = Math.round(br * 0.25);
+      const dg = Math.round(bg * 0.25);
+      const db = Math.round(bb * 0.25);
+      root.style.setProperty('--player-grad-top',  `rgb(${dr},${dg},${db})`);
+
+      // Mettre aussi à jour la meta theme-color du navigateur
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) metaTheme.content = `rgb(${dr},${dg},${db})`;
+    });
+  };
+  tempImg.onerror = () => {
+    // Image non chargeable (CORS strict) → garder le thème actuel
+  };
+  tempImg.src = imgSrc;
+}
+
 // Lecture d'une piste
 function playTrack(index) {
   currentTrack = index;
@@ -2983,6 +3083,11 @@ function playTrack(index) {
   nowPlaying.innerText = `🎵 ${track.title}`;
   thumbnail.src = track.img;
   audio.play();
+
+  // ===== THÈME DYNAMIQUE =====
+  if (track.img && track.img !== 'TESTTESTTEST' && track.img !== 'TEST') {
+    applyDynamicTheme(track.img);
+  }
 
   // ===== TRACKING STATS =====
   statsTrackPlay(track);
