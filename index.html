@@ -2832,6 +2832,16 @@ function addToQueue(track) {
 }
 
 
+// ── Fonction manquante : avance dans la playlist en tenant compte du shuffle ──
+function playNextFromPlaylist() {
+  if (isShuffle) {
+    currentTrack = Math.floor(Math.random() * filteredPlaylist.length);
+  } else {
+    currentTrack = (currentTrack + 1) % filteredPlaylist.length;
+  }
+  playTrack(currentTrack);
+}
+
 function playNextTrack() {
   if (tempQueue.length > 0) {
     const next = tempQueue.shift(); // joue depuis le "dossier invisible"
@@ -3478,6 +3488,17 @@ audio.ontimeupdate = () => {
   currentTimeEl.textContent = formatTime(audio.currentTime);
   durationEl.textContent = formatTime(audio.duration);
 
+  // ── Indique à l'OS la position exacte → empêche le processus d'être tué en arrière-plan ──
+  if ('mediaSession' in navigator && !isNaN(audio.duration) && audio.duration > 0) {
+    try {
+      navigator.mediaSession.setPositionState({
+        duration: audio.duration,
+        playbackRate: audio.playbackRate,
+        position: audio.currentTime
+      });
+    } catch(e) {}
+  }
+
   // Synchronisation paroles si piste sync
   const track = filteredPlaylist[currentTrack];
   if(track.isSynced && lyricsData.length > 0) {
@@ -3503,6 +3524,33 @@ audio.onended = () => {
     nextTrack(); // Utilise la nouvelle version qui regarde dans tempQueue
   }
 };
+
+// ── Enregistrement unique des handlers MediaSession au démarrage ──
+// Garantit que les boutons écran verrouillé fonctionnent même si
+// updateMediaSession() n'a pas encore été appelée une première fois.
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.setActionHandler('play', () => {
+    audio.play();
+    playPauseBtn.textContent = "⏸️";
+    navigator.mediaSession.playbackState = 'playing';
+  });
+  navigator.mediaSession.setActionHandler('pause', () => {
+    audio.pause();
+    playPauseBtn.textContent = "▶️";
+    navigator.mediaSession.playbackState = 'paused';
+  });
+  navigator.mediaSession.setActionHandler('nexttrack', () => nextTrack());
+  navigator.mediaSession.setActionHandler('previoustrack', () => prevTrack());
+  navigator.mediaSession.setActionHandler('seekto', (details) => {
+    if (details.seekTime !== undefined) audio.currentTime = details.seekTime;
+  });
+  navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+    audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset || 10));
+  });
+  navigator.mediaSession.setActionHandler('seekforward', (details) => {
+    audio.currentTime = Math.min(audio.duration, audio.currentTime + (details.seekOffset || 10));
+  });
+}
 
 // ── 3. Synchronisation Media Session ↔ état réel de l'audio ──
 // Ces listeners natifs se déclenchent quelle que soit l'origine de
