@@ -3270,6 +3270,14 @@ function playTrack(index) {
 
 updateMediaSession(track);
 
+  // ── Ping SW avec les infos du morceau → force le refresh de la notif écran verrouillé ──
+  if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({
+      type: 'NOW_PLAYING',
+      track: { title: track.title, img: track.img }
+    });
+  }
+
   playPauseBtn.textContent = "⏸️";
 
   displayLyrics(index);
@@ -4108,6 +4116,23 @@ _origNowPlayingObserver.observe(document.getElementById('now-playing'), { childL
       if (refreshing) return;
       refreshing = true;
       window.location.reload();
+    });
+
+    // ── Écoute les messages du SW → rafraîchit la notif écran verrouillé ──
+    navigator.serviceWorker.addEventListener('message', event => {
+      if (event.data?.type === 'UPDATE_MEDIA_SESSION') {
+        const t = event.data.track;
+        if (t && 'mediaSession' in navigator) {
+          // Re-applique les métadonnées (titre + pochette du nouveau morceau)
+          updateMediaSession(t);
+          // Trick OS : passe brièvement à 'none' puis 'playing'
+          // pour forcer Android/iOS à redessiner la notification
+          navigator.mediaSession.playbackState = 'none';
+          requestAnimationFrame(() => {
+            navigator.mediaSession.playbackState = 'playing';
+          });
+        }
+      }
     });
   });
 })();
