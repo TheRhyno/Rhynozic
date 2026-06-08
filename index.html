@@ -3270,11 +3270,26 @@ function playTrack(index) {
 
 updateMediaSession(track);
 
-  // ── Ping SW avec les infos du morceau → force le refresh de la notif écran verrouillé ──
-  if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-    navigator.serviceWorker.controller.postMessage({
-      type: 'NOW_PLAYING',
-      track: { title: track.title, img: track.img }
+  // ── Force le refresh de la notification écran verrouillé ──
+  // Android ne redessine pas toujours la notif au premier appel quand l'écran
+  // est éteint. On recrée l'objet MediaMetadata 3 fois avec délais croissants
+  // pour garantir que l'OS reçoit bien la mise à jour même en arrière-plan.
+  if ('mediaSession' in navigator) {
+    [300, 800, 1800].forEach(delay => {
+      setTimeout(() => {
+        try {
+          const m = navigator.mediaSession.metadata;
+          if (m) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+              title:   m.title,
+              artist:  m.artist,
+              album:   m.album,
+              artwork: m.artwork
+            });
+            navigator.mediaSession.playbackState = 'playing';
+          }
+        } catch(e) {}
+      }, delay);
     });
   }
 
@@ -4116,23 +4131,6 @@ _origNowPlayingObserver.observe(document.getElementById('now-playing'), { childL
       if (refreshing) return;
       refreshing = true;
       window.location.reload();
-    });
-
-    // ── Écoute les messages du SW → rafraîchit la notif écran verrouillé ──
-    navigator.serviceWorker.addEventListener('message', event => {
-      if (event.data?.type === 'UPDATE_MEDIA_SESSION') {
-        const t = event.data.track;
-        if (t && 'mediaSession' in navigator) {
-          // Re-applique les métadonnées (titre + pochette du nouveau morceau)
-          updateMediaSession(t);
-          // Trick OS : passe brièvement à 'none' puis 'playing'
-          // pour forcer Android/iOS à redessiner la notification
-          navigator.mediaSession.playbackState = 'none';
-          requestAnimationFrame(() => {
-            navigator.mediaSession.playbackState = 'playing';
-          });
-        }
-      }
     });
   });
 })();
