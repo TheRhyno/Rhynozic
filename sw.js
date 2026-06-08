@@ -3,7 +3,7 @@
 //  ⚡ Pour déclencher une mise à jour : changer APP_VERSION
 // ============================================================
 
-const APP_VERSION  = 'v1.0.16';
+const APP_VERSION  = 'v1.0.17';
 const CACHE_NAME   = `rhynozic-shell-${APP_VERSION}`;
 const AUDIO_CACHE  = `rhynozic-audio-${APP_VERSION}`;
 const IMG_CACHE    = `rhynozic-img-${APP_VERSION}`;
@@ -130,17 +130,6 @@ self.addEventListener('message', event => {
   if (data.type === 'TRACK_CHANGED') {
     self.clients.matchAll({ includeUncontrolled: true }).then(clients => {
       clients.forEach(c => c.postMessage({ type: 'SW_ALIVE' }));
-    });
-  }
-
-  // La page envoie les infos du nouveau morceau → re-broadcast vers tous les clients
-  // Permet de rafraîchir la notification écran verrouillé même écran éteint
-  if (data.type === 'NOW_PLAYING') {
-    self.clients.matchAll({ includeUncontrolled: true, type: 'window' }).then(clients => {
-      clients.forEach(c => c.postMessage({
-        type: 'UPDATE_MEDIA_SESSION',
-        track: data.track
-      }));
     });
   }
 });
