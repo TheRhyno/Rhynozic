@@ -132,4 +132,15 @@ self.addEventListener('message', event => {
       clients.forEach(c => c.postMessage({ type: 'SW_ALIVE' }));
     });
   }
+
+  // La page envoie les infos du nouveau morceau → re-broadcast vers tous les clients
+  // Permet de rafraîchir la notification écran verrouillé même écran éteint
+  if (data.type === 'NOW_PLAYING') {
+    self.clients.matchAll({ includeUncontrolled: true, type: 'window' }).then(clients => {
+      clients.forEach(c => c.postMessage({
+        type: 'UPDATE_MEDIA_SESSION',
+        track: data.track
+      }));
+    });
+  }
 });
